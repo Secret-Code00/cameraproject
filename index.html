@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>NamaBrand: Kamera Sekali Pakai Digital untuk Acara</title>
+<meta name="description" content="Tamu scan QR, memotret dengan efek film, dan semua foto terkumpul di satu album yang terbuka bersama.">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{--paper:#F4F0E8;--ink:#1B1B1B;--acc:#FF5A36;--teal:#1F6F6B;--mut:#6B665C;--line:#D9D2C3;--serif:'DM Serif Display',Georgia,serif}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font:17px/1.6 'DM Sans',system-ui,sans-serif}
+body.camv{background:#000;overflow:hidden}
+[hidden]{display:none!important}
+h1,h2,h3{font-family:var(--serif);font-weight:400;margin:0;line-height:1.05}
+p{margin:0 0 1em}
+.w{max-width:900px;margin:0 auto;padding:0 22px}
+.btn,button{font:inherit;font-weight:700;cursor:pointer;text-decoration:none;display:inline-block;border:2px solid var(--ink);background:var(--ink);color:var(--paper);padding:11px 24px;border-radius:999px}
+.btn:hover,button:hover{background:transparent;color:var(--ink)}
+.btn.a{background:var(--acc);border-color:var(--acc);color:#fff}.btn.a:hover{background:transparent;color:var(--acc)}
+.btn.o,button.o{background:transparent;color:var(--ink)}.btn.o:hover,button.o:hover{background:var(--ink);color:var(--paper)}
+button:disabled{opacity:.5;cursor:wait}
+:focus-visible{outline:3px solid var(--acc);outline-offset:3px}
+nav{display:flex;justify-content:space-between;align-items:center;padding:16px 22px;max-width:900px;margin:0 auto}
+.logo{font-family:var(--serif);font-size:1.6rem;text-decoration:none;color:var(--ink)}
+.strip{height:22px;background:var(--ink) radial-gradient(circle,var(--paper) 4px,transparent 5px) 0 50%/26px 22px repeat-x}
+.hero{padding:44px 0 64px}
+.hero h1{font-size:clamp(2.8rem,10vw,5rem);max-width:720px}
+.hero h1 em{color:var(--acc);font-style:italic}
+.hero p.l{font-size:1.2rem;color:var(--mut);max-width:520px;margin:18px 0 26px}
+.frames{display:flex;gap:12px;margin-top:44px;overflow:hidden}
+.fr{flex:none;width:132px;aspect-ratio:3/4;border:6px solid #fff;box-shadow:0 8px 20px rgba(0,0,0,.18);position:relative}
+.fr:nth-child(1){background:linear-gradient(160deg,#F3B58A,#C9573A);transform:rotate(-3deg)}
+.fr:nth-child(2){background:linear-gradient(160deg,#9CC5B9,#2D6A62);margin-top:16px}
+.fr:nth-child(3){background:linear-gradient(160deg,#E8D9A6,#B58A2E);transform:rotate(3deg)}
+.fr:nth-child(4){background:linear-gradient(160deg,#C9B9D8,#6A4E8A);margin-top:10px;transform:rotate(-2deg)}
+.fr::after{content:"26 11 '26";position:absolute;right:6px;bottom:4px;font:700 .7rem monospace;color:#ff9a2e}
+section{padding:64px 0}
+.dk{background:var(--ink);color:var(--paper)}
+h2{font-size:clamp(2.2rem,7vw,3.4rem);margin-bottom:14px}
+.g{display:grid;gap:16px;margin-top:28px}
+.c{background:#fff;border:1px solid var(--line);border-radius:18px;padding:22px}
+.dk .c{background:#26231F;border-color:#3A362F}
+.c h3{font-size:1.6rem;margin-bottom:6px}.c p{margin:0;color:var(--mut)}.dk .c p{color:#B9B2A4}
+.n{font-family:var(--serif);color:var(--acc);font-size:2rem}
+details{border-bottom:1px solid var(--line);padding:14px 0}summary{cursor:pointer;font-weight:700}details p{margin:8px 0 0;color:var(--mut)}
+footer{padding:28px 22px;text-align:center;color:var(--mut);font-size:.9rem}
+@media(min-width:760px){.g.c3{grid-template-columns:repeat(3,1fr)}.g.c2{grid-template-columns:repeat(2,1fr)}}
+/* form + hasil */
+.box{max-width:520px;margin:0 auto;padding:36px 22px 70px}
+label{display:block;font-weight:700;margin-top:16px}
+input,select{width:100%;font:inherit;padding:12px 14px;border:1.5px solid var(--line);border-radius:12px;background:#fff;margin-top:4px}
+.lk{background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px;margin-top:12px;word-break:break-all}
+.lk small{display:block;color:var(--mut)}
+.msg{background:#fff;border:1px solid var(--line);border-radius:14px;padding:18px}
+/* kamera */
+#v-cam{position:fixed;inset:0;background:#000;color:#fff}
+#v-cam video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+#v-cam video.mir{transform:scaleX(-1)}
+.top,.bot{position:absolute;left:0;right:0;display:flex;justify-content:space-between;align-items:center;padding:14px 18px;z-index:2}
+.top{top:env(safe-area-inset-top,0px);background:linear-gradient(rgba(0,0,0,.55),transparent)}
+.bot{bottom:env(safe-area-inset-bottom,0px);padding-bottom:22px;background:linear-gradient(transparent,rgba(0,0,0,.6))}
+.top button,.bot button.o{padding:6px 14px;color:#fff;border-color:rgba(255,255,255,.6);font-size:.95rem}
+#shut{width:74px;height:74px;border-radius:50%;padding:0;background:#fff;border:5px solid rgba(255,255,255,.5);background-clip:padding-box}
+.intro{position:absolute;inset:0;z-index:5;background:var(--paper);color:var(--ink);display:grid;place-content:center;padding:28px;gap:12px}
+.intro h2{font-size:2.4rem}
+#toast{position:fixed;left:50%;bottom:130px;transform:translateX(-50%);background:var(--ink);color:#fff;padding:8px 18px;border-radius:999px;font-size:.95rem;opacity:0;transition:opacity .25s;z-index:99;pointer-events:none}
+#toast.on{opacity:1}
+.chip{display:inline-block;font-size:.8rem;font-weight:700;padding:1px 10px;border-radius:999px;background:var(--line);margin-left:8px}.chip.on{background:var(--teal);color:#fff}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-top:18px}
+.grid a{display:block;aspect-ratio:1;background:#ddd;overflow:hidden;border-radius:8px}
+.grid img{width:100%;height:100%;object-fit:cover;display:block}
+</style>
+</head>
+<body>
+
+<div id="v-home">
+  <nav><a class="logo" href="#/"><span class="brand">NamaBrand</span></a><span><a class="btn o" id="navA" href="#/masuk">Masuk</a> <a class="btn a" href="#/buat">Buat acara</a></span></nav>
+  <div class="strip"></div>
+  <header class="hero"><div class="w">
+    <h1>Semua sudut pandang tamu, <em>satu album.</em></h1>
+    <p class="l">Tamu scan QR, memotret dengan efek film langsung dari browser HP, dan seluruh foto terkumpul di satu album yang terbuka bersama.</p>
+    <a class="btn a" href="#/buat">Buat acara gratis</a>
+    <div class="frames" aria-hidden="true"><div class="fr"></div><div class="fr"></div><div class="fr"></div><div class="fr"></div><div class="fr"></div></div>
+  </div></header>
+  <div class="strip"></div>
+  <section><div class="w">
+    <h2>Tiga langkah</h2>
+    <div class="g c3">
+      <div class="c"><div class="n">01</div><h3>Buat acara</h3><p>Beri nama, pilih efek film, jumlah jepretan, dan kapan album terbuka.</p></div>
+      <div class="c"><div class="n">02</div><h3>Bagikan QR</h3><p>Tempel di meja atau kirim link. Tamu tidak perlu install apa pun.</p></div>
+      <div class="c"><div class="n">03</div><h3>Album terbuka</h3><p>Di waktu yang kamu atur, semua foto muncul bersamaan untuk semua tamu.</p></div>
+    </div>
+  </div></section>
+  <section class="dk"><div class="w">
+    <h2>Dibuat seperti rol film</h2>
+    <div class="g c2">
+      <div class="c"><h3>Jepretan terbatas</h3><p>Tiap tamu punya jatah foto, jadi mereka memilih momen yang paling berarti.</p></div>
+      <div class="c"><div class="n"></div><h3>Efek film</h3><p>Klasik hangat, pudar, atau hitam putih, lengkap dengan grain dan cap tanggal.</p></div>
+      <div class="c"><h3>Album serentak</h3><p>Foto disembunyikan sampai waktu yang kamu tentukan, lalu terbuka untuk semua.</p></div>
+      <div class="c"><h3>Tanpa aplikasi</h3><p>Cukup browser di HP tamu, di iPhone maupun Android.</p></div>
+    </div>
+  </div></section>
+  <section><div class="w">
+    <h2>Pertanyaan umum</h2>
+    <details><summary>Apakah tamu harus daftar?</summary><p>Tidak. Tamu cukup memasukkan nama lalu mulai memotret.</p></details>
+    <details><summary>Kapan foto terlihat?</summary><p>Setelah waktu buka yang kamu atur. Pemilik acara bisa melihatnya kapan saja lewat link khusus.</p></details>
+    <details><summary>Berapa harganya?</summary><p>Isi bagian ini dengan paket dan harga kamu.</p></details>
+  </div></section>
+  <footer>© 2026 <span class="brand">NamaBrand</span></footer>
+</div>
+
+<div id="v-buat" hidden>
+  <nav><a class="logo" href="#/"><span class="brand">NamaBrand</span></a></nav>
+  <div class="box">
+    <div id="fbox">
+      <h2>Buat acara</h2>
+      <form id="fb">
+        <label>Nama acara<input id="bn" required maxlength="80" placeholder="Contoh: Pernikahan Rina & Dimas"></label>
+        <label>Efek film<select id="bp"><option value="klasik">Klasik hangat</option><option value="pudar">Pudar</option><option value="hitam">Hitam putih</option></select></label>
+        <label>Jepretan per tamu<input id="bm" type="number" min="1" max="36" value="12"></label>
+        <label>Album terbuka pada<input id="bk" type="datetime-local" required></label>
+        <p style="margin-top:20px"><button class="a" type="submit" id="bs">Buat acara</button></p>
+      </form>
+    </div>
+    <div id="res" hidden>
+      <h2>Acara siap</h2>
+      <div class="lk"><small>Link untuk tamu (jadikan QR)</small><span id="l1"></span></div>
+      <div id="qr" style="margin:14px 0"></div>
+      <div class="lk"><small>Link album (terbuka sesuai waktu)</small><span id="l2"></span></div>
+      <div class="lk"><small>Link pemilik acara: simpan baik-baik, bisa melihat album kapan saja</small><span id="l3"></span></div>
+      <p style="margin-top:16px"><button class="o" id="cp" type="button">Salin link tamu</button></p>
+    </div>
+  </div>
+</div>
+
+<div id="v-masuk" hidden>
+  <nav><a class="logo" href="#/"><span class="brand">NamaBrand</span></a></nav>
+  <div class="box">
+    <h2 id="mt">Masuk</h2>
+    <form id="fm">
+      <label>Email<input id="me" type="email" required autocomplete="email"></label>
+      <label>Kata sandi<input id="mp" type="password" required minlength="6" autocomplete="current-password"></label>
+      <p style="margin-top:20px"><button class="a" type="submit" id="mb">Masuk</button> <button class="o" type="button" id="mw">Belum punya akun? Daftar</button></p>
+    </form>
+    <p id="mx" class="msg" hidden></p>
+  </div>
+</div>
+
+<div id="v-akun" hidden>
+  <nav><a class="logo" href="#/"><span class="brand">NamaBrand</span></a><button class="o" id="out" type="button">Keluar</button></nav>
+  <div class="box">
+    <h2>Acara saya</h2>
+    <p><a class="btn a" href="#/buat">Buat acara baru</a></p>
+    <div id="ak"></div>
+  </div>
+</div>
+
+<div id="v-cam" hidden>
+  <video id="vd" playsinline muted autoplay></video><canvas id="cv" hidden></canvas>
+  <div class="top"><span>Sisa <b id="sisa"></b> jepretan</span><button class="o" id="flip" type="button">Balik kamera</button></div>
+  <div class="bot"><a class="btn o" id="toAlb" style="padding:6px 14px;color:#fff;border-color:rgba(255,255,255,.6)" href="#">Album</a><button id="shut" type="button" aria-label="Jepret"></button><span style="width:64px"></span></div>
+  <div class="intro" id="intro"></div>
+</div>
+
+<div id="v-alb" hidden>
+  <nav><a class="logo" href="#/"><span class="brand">NamaBrand</span></a></nav>
+  <div class="box"><h2 id="an">Album</h2><div id="ab"></div></div>
+</div>
+<div id="toast" role="status"></div>
+
+<script>
+/* ===== PENGATURAN ===== */
+var CFG={brand:'NamaBrand',url:'',key:'',wa:'6281200000000'};   // url & key dari Supabase (Project Settings > API); wa = nomor WhatsApp admin
+/* ====================== */
+(function(){
+  var $=function(i){return document.getElementById(i)},V=['home','buat','masuk','akun','cam','alb'],stream=null,facing='environment',E=null,busy=false,pakai=0,nama='';
+  document.title=CFG.brand+': Kamera Sekali Pakai Digital untuk Acara';
+  Array.prototype.forEach.call(document.querySelectorAll('.brand'),function(e){e.textContent=CFG.brand;});
+  function toast(t){var e=$('toast');e.textContent=t;e.classList.add('on');setTimeout(function(){e.classList.remove('on');},2300);}
+  function sbh(x){var h={apikey:CFG.key};if(/^eyJ/.test(CFG.key))h.Authorization='Bearer '+CFG.key;for(var k in x)h[k]=x[k];return h;}
+  var S=null;try{S=JSON.parse(localStorage.getItem('sess')||'null');}catch(e){}
+  function nav(){var a=$('navA');if(a){a.textContent=S?'Acara saya':'Masuk';a.href=S?'#/akun':'#/masuk';}}
+  function setS(r){S=r&&r.access_token?{a:r.access_token,r:r.refresh_token,x:Date.now()+(r.expires_in||3600)*1000}:null;localStorage.setItem('sess',JSON.stringify(S));nav();}
+  function auth(path,body,q){return fetch(CFG.url+'/auth/v1/'+path+(q||''),{method:'POST',headers:{apikey:CFG.key,'Content-Type':'application/json'},body:JSON.stringify(body)}).then(function(r){return r.json().then(function(j){if(!r.ok)throw j;return j;});});}
+  function tok(){
+    if(!S)return Promise.resolve(null);
+    if(S.x-Date.now()>60000)return Promise.resolve(S.a);
+    return auth('token',{refresh_token:S.r},'?grant_type=refresh_token').then(function(j){setS(j);return S&&S.a;}).catch(function(){setS(null);return null;});
+  }
+  function rpc(n,a){
+    return tok().then(function(t){
+      var h=sbh({'Content-Type':'application/json'});if(t)h.Authorization='Bearer '+t;
+      return fetch(CFG.url+'/rest/v1/rpc/'+n,{method:'POST',headers:h,body:JSON.stringify(a||{})});
+    }).then(function(r){if(!r.ok)throw r.status;return r.text();}).then(function(t){return t?JSON.parse(t):null;});
+  }
+  function show(v){V.forEach(function(x){$('v-'+x).hidden=x!==v;});document.body.className=v==='cam'?'camv':'';window.scrollTo(0,0);}
+  function note(v,html){show(v);}
+  function stopCam(){if(stream){stream.getTracks().forEach(function(t){t.stop();});stream=null;}}
+  function ok(){if(CFG.url&&CFG.key)return true;toast('Belum tersambung ke database (isi CFG.url dan CFG.key)');return false;}
+  function esc(s){var d=document.createElement('div');d.textContent=s;return d.innerHTML;}
+
+  function route(){
+    var p=location.hash.replace(/^#\/?/,'').split('/');stopCam();
+    if(p[0]==='buat'){if(!S){location.hash='#/masuk';return;}return buat();}
+    if(p[0]==='masuk')return masuk();
+    if(p[0]==='akun'){if(!S){location.hash='#/masuk';return;}return akun();}
+    if(p[0]==='e'&&p[1])return cam(p[1]);
+    if(p[0]==='a'&&p[1])return alb(p[1],p[2]);
+    show('home');
+  }
+  window.addEventListener('hashchange',route);
+
+  /* ---- buat acara ---- */
+  function buat(){
+    show('buat');$('fbox').hidden=false;$('res').hidden=true;
+    var d=new Date(Date.now()+864e5);d.setMinutes(d.getMinutes()-d.getTimezoneOffset());$('bk').value=d.toISOString().slice(0,16);
+  }
+  $('fb').addEventListener('submit',function(e){
+    e.preventDefault();if(!ok())return;
+    var b=$('bs');b.disabled=true;b.textContent='Membuat...';
+    rpc('buat_event',{p_nama:$('bn').value.trim(),p_preset:$('bp').value,p_maks:Math.max(1,Math.min(36,parseInt($('bm').value,10)||12)),p_buka:new Date($('bk').value).toISOString()})
+      .then(function(r){
+        var ev=Array.isArray(r)?r[0]:r,base=location.origin+location.pathname;
+        localStorage.setItem('host_'+ev.id,ev.token);
+        var l1=base+'#/e/'+ev.id;
+        $('l1').textContent=l1;$('l2').textContent=base+'#/a/'+ev.id;$('l3').textContent=base+'#/a/'+ev.id+'/'+ev.token;
+        $('fbox').hidden=true;$('res').hidden=false;
+        $('cp').onclick=function(){try{navigator.clipboard.writeText(l1).then(function(){toast('Link tersalin');});}catch(x){toast('Salin manual ya');}};
+        $('l3').parentNode.insertAdjacentHTML('afterend','<p class="msg" style="margin-top:12px">Acara ini <b>menunggu aktivasi</b>. Setelah pembayaran dikonfirmasi, kamera tamu bisa dipakai. <a href="'+wa(ev.id)+'" target="_blank" rel="noopener">Konfirmasi lewat WhatsApp</a></p>');
+        makeQR(l1);
+      }).catch(function(){toast('Gagal membuat acara. Coba lagi ya.');})
+      .then(function(){b.disabled=false;b.textContent='Buat acara';});
+  });
+  function makeQR(t){
+    var el=$('qr');el.textContent='';
+    function go(){try{new QRCode(el,{text:t,width:180,height:180});}catch(x){el.textContent='QR belum bisa dibuat. Pakai pembuat QR gratis dengan link di atas.';}}
+    if(window.QRCode)return go();
+    var s=document.createElement('script');s.src='https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js';s.onload=go;
+    s.onerror=function(){el.textContent='QR belum bisa dimuat. Pakai pembuat QR gratis dengan link di atas.';};document.head.appendChild(s);
+  }
+
+  /* ---- kamera tamu ---- */
+  function film(x,w,h,p){
+    var im=x.getImageData(0,0,w,h),d=im.data,i,n,g;
+    for(i=0;i<d.length;i+=4){
+      n=(Math.random()-.5)*(p==='hitam'?26:18);
+      if(p==='hitam'){g=.3*d[i]+.59*d[i+1]+.11*d[i+2];g=(g-128)*1.15+128+n;d[i]=d[i+1]=d[i+2]=g;}
+      else if(p==='pudar'){d[i]=(d[i]-128)*.9+150+n;d[i+1]=(d[i+1]-128)*.9+148+n;d[i+2]=(d[i+2]-128)*.9+158+n;}
+      else{d[i]=(d[i]-128)*1.08+138+n;d[i+1]=(d[i+1]-128)*1.05+132+n;d[i+2]=(d[i+2]-128)*1.02+120+n;}
+    }
+    x.putImageData(im,0,0);
+    var gr=x.createRadialGradient(w/2,h/2,Math.min(w,h)*.35,w/2,h/2,Math.max(w,h)*.75);
+    gr.addColorStop(0,'rgba(0,0,0,0)');gr.addColorStop(1,'rgba(30,15,0,.45)');x.fillStyle=gr;x.fillRect(0,0,w,h);
+    var t=new Date();x.font='bold '+Math.round(w*.035)+'px monospace';x.fillStyle='#ff9a2e';x.textAlign='right';
+    x.fillText(t.getDate()+' '+(t.getMonth()+1)+" '"+String(t.getFullYear()).slice(2),w*.96,h*.96);
+  }
+  function startCam(){
+    stopCam();
+    navigator.mediaDevices.getUserMedia({video:{facingMode:facing,width:{ideal:1280},height:{ideal:1280}},audio:false})
+      .then(function(s){stream=s;$('vd').srcObject=s;$('vd').classList.toggle('mir',facing==='user');})
+      .catch(function(){toast('Kamera tidak bisa dibuka. Izinkan akses kamera ya.');});
+  }
+  function upd(){var s=Math.max(0,E.maks-pakai);$('sisa').textContent=s;$('shut').disabled=s<=0||busy;}
+  function cam(id){
+    show('cam');var it=$('intro');it.hidden=false;it.innerHTML='<h2>Memuat...</h2>';
+    if(!ok()){it.innerHTML='<h2>Belum tersambung</h2>';return;}
+    rpc('get_event',{p_id:id}).then(function(r){
+      E=Array.isArray(r)?r[0]:r;
+      if(!E){it.innerHTML='<h2>Acara tidak ditemukan</h2><p>Periksa lagi link atau QR-nya.</p>';return;}
+      if(!E.aktif){it.innerHTML='<h2>'+esc(E.nama)+'</h2><p>Acara ini belum aktif. Hubungi penyelenggara ya.</p>';return;}
+      E.id=id;pakai=parseInt(localStorage.getItem('pakai_'+id),10)||0;
+      it.innerHTML='<h2>'+esc(E.nama)+'</h2><p>Kamu punya <b>'+E.maks+'</b> jepretan, seperti satu rol film. Pilih momen terbaikmu. Foto terbuka untuk semua tamu setelah album dibuka.</p><label>Nama kamu<input id="gn" maxlength="40"></label><button class="a" id="gg" type="button">Mulai memotret</button>';
+      $('gn').value=localStorage.getItem('nama')||'';
+      $('gg').onclick=function(){
+        nama=$('gn').value.trim();if(!nama){$('gn').focus();return;}
+        localStorage.setItem('nama',nama);it.hidden=true;$('toAlb').href='#/a/'+id;upd();startCam();
+      };
+    }).catch(function(){it.innerHTML='<h2>Gagal memuat</h2><p>Coba muat ulang halaman.</p>';});
+  }
+  $('flip').addEventListener('click',function(){facing=facing==='user'?'environment':'user';startCam();});
+  $('shut').addEventListener('click',function(){
+    if(busy||!E||pakai>=E.maks)return;
+    var v=$('vd'),c=$('cv');if(!v.videoWidth)return;
+    var sc=Math.min(1,1280/Math.max(v.videoWidth,v.videoHeight));
+    c.width=Math.round(v.videoWidth*sc);c.height=Math.round(v.videoHeight*sc);
+    var x=c.getContext('2d');
+    if(facing==='user'){x.translate(c.width,0);x.scale(-1,1);}
+    x.drawImage(v,0,0,c.width,c.height);x.setTransform(1,0,0,1,0,0);
+    film(x,c.width,c.height,E.preset);
+    busy=true;upd();toast('Mengirim...');
+    var path=E.id+'/'+(crypto.randomUUID?crypto.randomUUID():Date.now()+''+Math.random().toString(16).slice(2))+'.jpg';
+    c.toBlob(function(blob){
+      fetch(CFG.url+'/storage/v1/object/foto/'+path,{method:'POST',headers:sbh({'Content-Type':'image/jpeg'}),body:blob})
+        .then(function(r){if(!r.ok)throw r.status;return rpc('tambah_foto',{p_id:E.id,p_tamu:nama,p_path:path});})
+        .then(function(){pakai++;localStorage.setItem('pakai_'+E.id,pakai);toast('Terkirim');})
+        .catch(function(){toast('Gagal kirim, coba lagi ya');})
+        .then(function(){busy=false;upd();});
+    },'image/jpeg',.78);
+  });
+
+  /* ---- album ---- */
+  function alb(id,token){
+    show('alb');var box=$('ab');box.innerHTML='<p>Memuat album...</p>';
+    if(!ok()){box.innerHTML='<p>Belum tersambung.</p>';return;}
+    Promise.all([rpc('get_event',{p_id:id}),rpc('list_foto',{p_id:id,p_token:token||null})]).then(function(a){
+      var ev=Array.isArray(a[0])?a[0][0]:a[0],list=a[1]||[];
+      if(!ev){box.innerHTML='<p>Acara tidak ditemukan.</p>';return;}
+      $('an').textContent=ev.nama;
+      var open=new Date()>=new Date(ev.buka);
+      if(!open&&!list.length){box.innerHTML='<div class="msg">Album belum dibuka. Sudah terkumpul <b>'+ev.total+'</b> foto dari para tamu. Terbuka pada '+esc(new Date(ev.buka).toLocaleString('id-ID',{day:'numeric',month:'long',year:'numeric',hour:'2-digit',minute:'2-digit'}))+'.</div>';return;}
+      if(!list.length){box.innerHTML='<p>Belum ada foto.</p>';return;}
+      box.textContent='';var g=document.createElement('div');g.className='grid';
+      list.forEach(function(f){
+        var u=CFG.url+'/storage/v1/object/public/foto/'+f.path,a=document.createElement('a'),im=document.createElement('img');
+        a.href=u;a.target='_blank';a.rel='noopener';a.title=f.tamu;im.loading='lazy';im.alt='Foto dari '+f.tamu;im.src=u;a.appendChild(im);g.appendChild(a);
+      });
+      box.appendChild(g);
+      var p=document.createElement('p');p.style.cssText='margin-top:12px;color:#6B665C;font-size:.92rem';p.textContent='Ketuk foto untuk ukuran penuh, cubit untuk zoom, tekan lama untuk menyimpan.';box.appendChild(p);
+    }).catch(function(){box.innerHTML='<p>Album belum bisa dimuat.</p>';});
+  }
+  function wa(id){return 'https://wa.me/'+CFG.wa+'?text='+encodeURIComponent('Halo, saya mau mengaktifkan acara dengan kode '+id+'.');}
+
+  /* ---- masuk / daftar ---- */
+  var daftar=false;
+  function masuk(){show('masuk');setMode(false);$('mx').hidden=true;}
+  function setMode(d){daftar=d;$('mt').textContent=d?'Daftar':'Masuk';$('mb').textContent=d?'Daftar':'Masuk';$('mw').textContent=d?'Sudah punya akun? Masuk':'Belum punya akun? Daftar';$('mp').autocomplete=d?'new-password':'current-password';}
+  $('mw').addEventListener('click',function(){setMode(!daftar);});
+  $('fm').addEventListener('submit',function(e){
+    e.preventDefault();if(!ok())return;
+    var b=$('mb'),x=$('mx'),em=$('me').value.trim(),pw=$('mp').value;b.disabled=true;x.hidden=true;
+    (daftar?auth('signup',{email:em,password:pw}):auth('token',{email:em,password:pw},'?grant_type=password'))
+      .then(function(j){
+        if(j&&j.access_token){setS(j);location.hash='#/akun';}
+        else{x.hidden=false;x.textContent='Akun dibuat. Cek email kamu untuk konfirmasi, lalu masuk.';setMode(false);}
+      })
+      .catch(function(j){x.hidden=false;x.textContent=(j&&(j.msg||j.error_description||j.message))||'Gagal. Periksa email dan kata sandi ya.';})
+      .then(function(){b.disabled=false;});
+  });
+  $('out').addEventListener('click',function(){setS(null);location.hash='#/';});
+
+  /* ---- acara saya ---- */
+  function akun(){
+    show('akun');var box=$('ak');box.innerHTML='<p>Memuat...</p>';
+    rpc('acara_saya').then(function(list){
+      list=list||[];box.textContent='';
+      if(!list.length){box.innerHTML='<p style="margin-top:14px">Belum ada acara.</p>';return;}
+      var base=location.origin+location.pathname;
+      list.forEach(function(e){
+        var c=document.createElement('div');c.className='lk';
+        c.innerHTML='<b>'+esc(e.nama)+'</b><span class="chip'+(e.aktif?' on':'')+'">'+(e.aktif?'Aktif':'Menunggu aktivasi')+'</span><small>'+e.total+' foto, maks '+e.maks+' jepretan per tamu</small>';
+        var p=document.createElement('p');p.style.margin='10px 0 0';
+        function link(t,h,ext){var a=document.createElement('a');a.className='btn o';a.style.cssText='padding:6px 14px;font-size:.9rem;margin:0 6px 6px 0';a.textContent=t;a.href=h;if(ext){a.target='_blank';a.rel='noopener';}p.appendChild(a);return a;}
+        var cp=document.createElement('button');cp.className='o';cp.type='button';cp.style.cssText='padding:6px 14px;font-size:.9rem;margin:0 6px 6px 0';cp.textContent='Salin link tamu';
+        cp.onclick=function(){try{navigator.clipboard.writeText(base+'#/e/'+e.id).then(function(){toast('Link tersalin');});}catch(x){toast('Salin manual ya');}};
+        p.appendChild(cp);link('Album','#/a/'+e.id);
+        if(!e.aktif)link('Aktifkan lewat WhatsApp',wa(e.id),true);
+        c.appendChild(p);box.appendChild(c);
+      });
+    }).catch(function(){box.innerHTML='<p>Gagal memuat. Coba masuk lagi.</p>';});
+  }
+  nav();
+  route();
+})();
+</script>
+</body>
+</html>
