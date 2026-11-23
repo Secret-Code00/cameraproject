@@ -1,367 +1,745 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>NamaBrand: Kamera Sekali Pakai Digital untuk Acara</title>
-<meta name="description" content="Tamu scan QR, memotret dengan efek film, dan semua foto terkumpul di satu album yang terbuka bersama.">
-<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Momenhadir — Kamera sekali pakai digital untuk acaramu</title>
+<meta name="description" content="Tamu scan QR, memotret dari HP tanpa aplikasi, dan semua foto masuk ke satu album privat. Plus slideshow live, cari fotomu lewat selfie, buku tamu video, dan photobook cetak.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,300;1,9..144,400;1,9..144,500;1,9..144,600;1,9..144,700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      colors: {
+        background: '#F5EFE3',
+        foreground: '#1A1614',
+        card: '#FBF7EE',
+        primary: '#FF4A1C',
+        'primary-foreground': '#FFF5F0',
+        secondary: '#D89A5C',
+        'secondary-foreground': '#1A1614',
+        muted: '#E8E0CF',
+        'muted-foreground': '#6B6357',
+        border: '#D9D0BD',
+        ring: '#FF4A1C',
+        destructive: '#DC2626',
+        darkroom: '#141210',
+        'darkroom-foreground': '#F5EFE3',
+        'darkroom-muted': '#9A9184',
+        paper: '#FBF7EE',
+      },
+      fontFamily: {
+        display: ['Fraunces', 'Georgia', 'serif'],
+        sans: ['DM Sans', 'system-ui', 'sans-serif'],
+        mono: ['JetBrains Mono', 'ui-monospace', 'monospace'],
+      },
+      animation: {
+        marquee: 'marquee 45s linear infinite',
+        'ken-burns': 'kenBurns 20s ease-in-out infinite alternate',
+        float: 'float 6s ease-in-out infinite',
+      },
+      keyframes: {
+        marquee: {
+          '0%': { transform: 'translateX(0)' },
+          '100%': { transform: 'translateX(-50%)' },
+        },
+        kenBurns: {
+          '0%': { transform: 'scale(1)' },
+          '100%': { transform: 'scale(1.14)' },
+        },
+        float: {
+          '0%, 100%': { transform: 'translateY(0px)' },
+          '50%': { transform: 'translateY(-8px)' },
+        },
+      },
+      boxShadow: {
+        print: '0 22px 40px -22px rgba(26,22,20,0.28), 0 8px 18px -10px rgba(26,22,20,0.18)',
+        lift: '0 42px 80px -42px rgba(26,22,20,0.45), 0 22px 42px -22px rgba(26,22,20,0.32)',
+      },
+    },
+  },
+}
+</script>
 <style>
-:root{--paper:#F4F0E8;--ink:#1B1B1B;--acc:#FF5A36;--teal:#1F6F6B;--mut:#6B665C;--line:#D9D2C3;--serif:'DM Serif Display',Georgia,serif}
-*{box-sizing:border-box}
-body{margin:0;background:var(--paper);color:var(--ink);font:17px/1.6 'DM Sans',system-ui,sans-serif}
-body.camv{background:#000;overflow:hidden}
-[hidden]{display:none!important}
-h1,h2,h3{font-family:var(--serif);font-weight:400;margin:0;line-height:1.05}
-p{margin:0 0 1em}
-.w{max-width:900px;margin:0 auto;padding:0 22px}
-.btn,button{font:inherit;font-weight:700;cursor:pointer;text-decoration:none;display:inline-block;border:2px solid var(--ink);background:var(--ink);color:var(--paper);padding:11px 24px;border-radius:999px}
-.btn:hover,button:hover{background:transparent;color:var(--ink)}
-.btn.a{background:var(--acc);border-color:var(--acc);color:#fff}.btn.a:hover{background:transparent;color:var(--acc)}
-.btn.o,button.o{background:transparent;color:var(--ink)}.btn.o:hover,button.o:hover{background:var(--ink);color:var(--paper)}
-button:disabled{opacity:.5;cursor:wait}
-:focus-visible{outline:3px solid var(--acc);outline-offset:3px}
-nav{display:flex;justify-content:space-between;align-items:center;padding:16px 22px;max-width:900px;margin:0 auto}
-.logo{font-family:var(--serif);font-size:1.6rem;text-decoration:none;color:var(--ink)}
-.strip{height:22px;background:var(--ink) radial-gradient(circle,var(--paper) 4px,transparent 5px) 0 50%/26px 22px repeat-x}
-.hero{padding:44px 0 64px}
-.hero h1{font-size:clamp(2.8rem,10vw,5rem);max-width:720px}
-.hero h1 em{color:var(--acc);font-style:italic}
-.hero p.l{font-size:1.2rem;color:var(--mut);max-width:520px;margin:18px 0 26px}
-.frames{display:flex;gap:12px;margin-top:44px;overflow:hidden}
-.fr{flex:none;width:132px;aspect-ratio:3/4;border:6px solid #fff;box-shadow:0 8px 20px rgba(0,0,0,.18);position:relative}
-.fr:nth-child(1){background:linear-gradient(160deg,#F3B58A,#C9573A);transform:rotate(-3deg)}
-.fr:nth-child(2){background:linear-gradient(160deg,#9CC5B9,#2D6A62);margin-top:16px}
-.fr:nth-child(3){background:linear-gradient(160deg,#E8D9A6,#B58A2E);transform:rotate(3deg)}
-.fr:nth-child(4){background:linear-gradient(160deg,#C9B9D8,#6A4E8A);margin-top:10px;transform:rotate(-2deg)}
-.fr::after{content:"26 11 '26";position:absolute;right:6px;bottom:4px;font:700 .7rem monospace;color:#ff9a2e}
-section{padding:64px 0}
-.dk{background:var(--ink);color:var(--paper)}
-h2{font-size:clamp(2.2rem,7vw,3.4rem);margin-bottom:14px}
-.g{display:grid;gap:16px;margin-top:28px}
-.c{background:#fff;border:1px solid var(--line);border-radius:18px;padding:22px}
-.dk .c{background:#26231F;border-color:#3A362F}
-.c h3{font-size:1.6rem;margin-bottom:6px}.c p{margin:0;color:var(--mut)}.dk .c p{color:#B9B2A4}
-.n{font-family:var(--serif);color:var(--acc);font-size:2rem}
-details{border-bottom:1px solid var(--line);padding:14px 0}summary{cursor:pointer;font-weight:700}details p{margin:8px 0 0;color:var(--mut)}
-footer{padding:28px 22px;text-align:center;color:var(--mut);font-size:.9rem}
-@media(min-width:760px){.g.c3{grid-template-columns:repeat(3,1fr)}.g.c2{grid-template-columns:repeat(2,1fr)}}
-/* form + hasil */
-.box{max-width:520px;margin:0 auto;padding:36px 22px 70px}
-label{display:block;font-weight:700;margin-top:16px}
-input,select{width:100%;font:inherit;padding:12px 14px;border:1.5px solid var(--line);border-radius:12px;background:#fff;margin-top:4px}
-.lk{background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px;margin-top:12px;word-break:break-all}
-.lk small{display:block;color:var(--mut)}
-.msg{background:#fff;border:1px solid var(--line);border-radius:14px;padding:18px}
-/* kamera */
-#v-cam{position:fixed;inset:0;background:#000;color:#fff}
-#v-cam video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
-#v-cam video.mir{transform:scaleX(-1)}
-.top,.bot{position:absolute;left:0;right:0;display:flex;justify-content:space-between;align-items:center;padding:14px 18px;z-index:2}
-.top{top:env(safe-area-inset-top,0px);background:linear-gradient(rgba(0,0,0,.55),transparent)}
-.bot{bottom:env(safe-area-inset-bottom,0px);padding-bottom:22px;background:linear-gradient(transparent,rgba(0,0,0,.6))}
-.top button,.bot button.o{padding:6px 14px;color:#fff;border-color:rgba(255,255,255,.6);font-size:.95rem}
-#shut{width:74px;height:74px;border-radius:50%;padding:0;background:#fff;border:5px solid rgba(255,255,255,.5);background-clip:padding-box}
-.intro{position:absolute;inset:0;z-index:5;background:var(--paper);color:var(--ink);display:grid;place-content:center;padding:28px;gap:12px}
-.intro h2{font-size:2.4rem}
-#toast{position:fixed;left:50%;bottom:130px;transform:translateX(-50%);background:var(--ink);color:#fff;padding:8px 18px;border-radius:999px;font-size:.95rem;opacity:0;transition:opacity .25s;z-index:99;pointer-events:none}
-#toast.on{opacity:1}
-.chip{display:inline-block;font-size:.8rem;font-weight:700;padding:1px 10px;border-radius:999px;background:var(--line);margin-left:8px}.chip.on{background:var(--teal);color:#fff}
-.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-top:18px}
-.grid a{display:block;aspect-ratio:1;background:#ddd;overflow:hidden;border-radius:8px}
-.grid img{width:100%;height:100%;object-fit:cover;display:block}
+  html { scroll-behavior: smooth; }
+  body { -webkit-font-smoothing: antialiased; }
+
+  /* Foto dengan perforasi film */
+  .film-strip {
+    position: relative;
+    background: #141210;
+    padding: 36px 0;
+  }
+  .film-strip::before,
+  .film-strip::after {
+    content: '';
+    position: absolute;
+    left: 0; right: 0;
+    height: 14px;
+    background-image: radial-gradient(circle, #F5EFE3 3.5px, transparent 4px);
+    background-size: 20px 14px;
+    background-repeat: repeat-x;
+    background-position: center;
+    opacity: .9;
+    z-index: 2;
+  }
+  .film-strip::before { top: 8px; }
+  .film-strip::after { bottom: 8px; }
+
+  /* Grain overlay untuk section gelap */
+  .grain { position: relative; isolation: isolate; }
+  .grain::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    opacity: .18;
+    pointer-events: none;
+    mix-blend-mode: overlay;
+    z-index: 0;
+  }
+  .grain > * { position: relative; z-index: 1; }
+
+  /* Details / FAQ */
+  details.faq {
+    border-bottom: 1px solid #D9D0BD;
+  }
+  details.faq summary {
+    list-style: none;
+    cursor: pointer;
+    padding: 22px 0;
+    font-weight: 600;
+    font-size: 1.0625rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+  }
+  details.faq summary::-webkit-details-marker { display: none; }
+  details.faq summary::after {
+    content: '+';
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 1.25rem;
+    color: #6B6357;
+    transition: transform .2s;
+    flex-shrink: 0;
+  }
+  details.faq[open] summary::after { content: '−'; }
+  details.faq p {
+    padding: 0 0 22px;
+    color: #6B6357;
+    margin: 0;
+  }
+
+  /* Marquee duplicate handling */
+  .marquee-track { animation: marquee 45s linear infinite; }
+  .marquee-track:hover { animation-play-state: paused; }
+
+  /* Lucide icon default size */
+  [data-lucide] { width: 1em; height: 1em; stroke-width: 1.6; }
 </style>
 </head>
-<body>
+<body class="min-h-screen bg-background text-foreground font-sans">
 
-<div id="v-home">
-  <nav><a class="logo" href="#/"><span class="brand">NamaBrand</span></a><span><a class="btn o" id="navA" href="#/masuk">Masuk</a> <a class="btn a" href="#/buat">Buat acara</a></span></nav>
-  <div class="strip"></div>
-  <header class="hero"><div class="w">
-    <h1>Semua sudut pandang tamu, <em>satu album.</em></h1>
-    <p class="l">Tamu scan QR, memotret dengan efek film langsung dari browser HP, dan seluruh foto terkumpul di satu album yang terbuka bersama.</p>
-    <a class="btn a" href="#/buat">Buat acara gratis</a>
-    <div class="frames" aria-hidden="true"><div class="fr"></div><div class="fr"></div><div class="fr"></div><div class="fr"></div><div class="fr"></div></div>
-  </div></header>
-  <div class="strip"></div>
-  <section><div class="w">
-    <h2>Tiga langkah</h2>
-    <div class="g c3">
-      <div class="c"><div class="n">01</div><h3>Buat acara</h3><p>Beri nama, pilih efek film, jumlah jepretan, dan kapan album terbuka.</p></div>
-      <div class="c"><div class="n">02</div><h3>Bagikan QR</h3><p>Tempel di meja atau kirim link. Tamu tidak perlu install apa pun.</p></div>
-      <div class="c"><div class="n">03</div><h3>Album terbuka</h3><p>Di waktu yang kamu atur, semua foto muncul bersamaan untuk semua tamu.</p></div>
-    </div>
-  </div></section>
-  <section class="dk"><div class="w">
-    <h2>Dibuat seperti rol film</h2>
-    <div class="g c2">
-      <div class="c"><h3>Jepretan terbatas</h3><p>Tiap tamu punya jatah foto, jadi mereka memilih momen yang paling berarti.</p></div>
-      <div class="c"><div class="n"></div><h3>Efek film</h3><p>Klasik hangat, pudar, atau hitam putih, lengkap dengan grain dan cap tanggal.</p></div>
-      <div class="c"><h3>Album serentak</h3><p>Foto disembunyikan sampai waktu yang kamu tentukan, lalu terbuka untuk semua.</p></div>
-      <div class="c"><h3>Tanpa aplikasi</h3><p>Cukup browser di HP tamu, di iPhone maupun Android.</p></div>
-    </div>
-  </div></section>
-  <section><div class="w">
-    <h2>Pertanyaan umum</h2>
-    <details><summary>Apakah tamu harus daftar?</summary><p>Tidak. Tamu cukup memasukkan nama lalu mulai memotret.</p></details>
-    <details><summary>Kapan foto terlihat?</summary><p>Setelah waktu buka yang kamu atur. Pemilik acara bisa melihatnya kapan saja lewat link khusus.</p></details>
-    <details><summary>Berapa harganya?</summary><p>Isi bagian ini dengan paket dan harga kamu.</p></details>
-  </div></section>
-  <footer>© 2026 <span class="brand">NamaBrand</span></footer>
-</div>
+<!-- ============ HEADER ============ -->
+<header class="sticky top-0 z-50 border-b border-border/60 bg-background/85 backdrop-blur">
+  <div class="mx-auto flex max-w-6xl items-center justify-between gap-6 px-5 py-4">
+    <a href="#" class="flex items-center gap-2 font-display text-2xl">
+      <span class="grid size-8 place-items-center rounded-full bg-foreground text-background">
+        <i data-lucide="camera" class="text-[14px]"></i>
+      </span>
+      Momenhadir
+    </a>
 
-<div id="v-buat" hidden>
-  <nav><a class="logo" href="#/"><span class="brand">NamaBrand</span></a></nav>
-  <div class="box">
-    <div id="fbox">
-      <h2>Buat acara</h2>
-      <form id="fb">
-        <label>Nama acara<input id="bn" required maxlength="80" placeholder="Contoh: Pernikahan Rina & Dimas"></label>
-        <label>Efek film<select id="bp"><option value="klasik">Klasik hangat</option><option value="pudar">Pudar</option><option value="hitam">Hitam putih</option></select></label>
-        <label>Jepretan per tamu<input id="bm" type="number" min="1" max="36" value="12"></label>
-        <label>Album terbuka pada<input id="bk" type="datetime-local" required></label>
-        <p style="margin-top:20px"><button class="a" type="submit" id="bs">Buat acara</button></p>
-      </form>
-    </div>
-    <div id="res" hidden>
-      <h2>Acara siap</h2>
-      <div class="lk"><small>Link untuk tamu (jadikan QR)</small><span id="l1"></span></div>
-      <div id="qr" style="margin:14px 0"></div>
-      <div class="lk"><small>Link album (terbuka sesuai waktu)</small><span id="l2"></span></div>
-      <div class="lk"><small>Link pemilik acara: simpan baik-baik, bisa melihat album kapan saja</small><span id="l3"></span></div>
-      <p style="margin-top:16px"><button class="o" id="cp" type="button">Salin link tamu</button></p>
+    <nav class="hidden items-center gap-7 text-sm font-medium md:flex">
+      <a href="#cara-kerja" class="text-foreground/70 hover:text-foreground">Cara kerja</a>
+      <a href="#fitur" class="text-foreground/70 hover:text-foreground">Fitur</a>
+      <a href="#plus" class="text-foreground/70 hover:text-foreground">Plus</a>
+      <a href="#harga" class="text-foreground/70 hover:text-foreground">Harga</a>
+      <a href="#faq" class="text-foreground/70 hover:text-foreground">FAQ</a>
+    </nav>
+
+    <div class="flex items-center gap-2">
+      <a href="#" class="hidden rounded-full px-4 py-2 text-sm font-medium text-foreground/80 hover:bg-muted sm:inline-block">Masuk</a>
+      <a href="#" class="rounded-full bg-foreground px-4 py-2 text-sm font-medium text-background hover:bg-primary transition-colors">Buat album</a>
     </div>
   </div>
-</div>
+</header>
 
-<div id="v-masuk" hidden>
-  <nav><a class="logo" href="#/"><span class="brand">NamaBrand</span></a></nav>
-  <div class="box">
-    <h2 id="mt">Masuk</h2>
-    <form id="fm">
-      <label>Email<input id="me" type="email" required autocomplete="email"></label>
-      <label>Kata sandi<input id="mp" type="password" required minlength="6" autocomplete="current-password"></label>
-      <p style="margin-top:20px"><button class="a" type="submit" id="mb">Masuk</button> <button class="o" type="button" id="mw">Belum punya akun? Daftar</button></p>
-    </form>
-    <p id="mx" class="msg" hidden></p>
+<!-- ============ HERO ============ -->
+<section class="relative overflow-hidden">
+  <div class="mx-auto grid max-w-6xl items-center gap-12 px-5 pb-20 pt-14 lg:grid-cols-[1.05fr_1fr] lg:pt-20">
+    <div class="space-y-7">
+      <p class="inline-flex items-center gap-2 rounded-full border border-border bg-card px-3 py-1 font-mono text-[11px] uppercase tracking-widest text-muted-foreground">
+        <span class="size-1.5 animate-pulse rounded-full bg-primary"></span>Kamera sekali pakai digital
+      </p>
+      <h1 class="font-display text-6xl leading-[0.95] text-balance sm:text-7xl lg:text-8xl">
+        Lihat harimu dari <em class="italic text-primary">mata semua tamu.</em>
+      </h1>
+      <p class="max-w-lg text-lg text-muted-foreground">
+        Tamu scan QR di meja, memotret dari HP sendiri, dan setiap jepretan masuk ke satu album privat.
+        Tanpa aplikasi, tanpa menagih foto di grup WhatsApp.
+      </p>
+      <div class="flex flex-wrap items-center gap-3">
+        <a href="#" class="inline-flex items-center gap-2 rounded-full bg-primary px-7 py-4 text-base font-semibold text-primary-foreground shadow-print transition-transform hover:-translate-y-0.5">
+          Buat album gratis <i data-lucide="arrow-right"></i>
+        </a>
+        <a href="#cara-kerja" class="inline-flex items-center gap-2 rounded-full border border-foreground/20 bg-card px-7 py-4 text-base font-semibold text-foreground hover:bg-muted">
+          Lihat cara kerjanya
+        </a>
+      </div>
+      <p class="font-mono text-xs uppercase tracking-widest text-muted-foreground">
+        Gratis 5 tamu · mulai Rp79rb · tanpa daftar untuk tamu
+      </p>
+    </div>
+
+    <!-- Hero visual: 2 polaroid + 1 phone mock -->
+    <div class="relative mx-auto h-[520px] w-full max-w-[460px]">
+      <!-- Polaroid kiri -->
+      <div class="absolute left-0 top-6 w-[52%]" style="transform: rotate(-7deg)">
+        <div class="bg-white p-3 pb-9 shadow-print" style="animation: float 6s ease-in-out infinite">
+          <img src="https://images.unsplash.com/photo-1518199266791-5375a83190b7?w=600&q=80&auto=format&fit=crop"
+               alt="Nenek memeluk pengantin"
+               class="aspect-square w-full object-cover">
+          <p class="mt-3 text-center font-display text-base italic">Dita &amp; Raka</p>
+          <p class="text-center font-mono text-[10px] uppercase tracking-widest text-muted-foreground">EXP 07</p>
+        </div>
+      </div>
+
+      <!-- Polaroid kanan -->
+      <div class="absolute right-0 top-0 w-[50%]" style="transform: rotate(6deg)">
+        <div class="bg-white p-3 pb-9 shadow-print" style="animation: float 6s ease-in-out 1.2s infinite">
+          <img src="https://images.unsplash.com/photo-1464349095431-e9a21285b5f3?w=600&q=80&auto=format&fit=crop"
+               alt="Pesta ulang tahun dengan kembang api"
+               class="aspect-square w-full object-cover">
+          <p class="mt-3 text-center font-display text-base italic">Suari 25</p>
+          <p class="text-center font-mono text-[10px] uppercase tracking-widest text-muted-foreground">EXP 14</p>
+        </div>
+      </div>
+
+      <!-- Phone camera mock -->
+      <div class="absolute bottom-0 left-1/2 w-[58%] -translate-x-1/2 rounded-[2.2rem] bg-foreground p-2.5 shadow-lift">
+        <div class="relative overflow-hidden rounded-[1.7rem] bg-darkroom">
+          <img src="https://images.unsplash.com/photo-1519741497674-611481863552?w=600&q=80&auto=format&fit=crop"
+               alt="Pengantin berdansa dilihat dari kamera tamu"
+               class="aspect-[9/14] w-full object-cover">
+          <!-- top chips -->
+          <div class="absolute inset-x-0 top-0 flex items-center justify-between p-3 font-mono text-[10px] uppercase tracking-wider text-darkroom-foreground">
+            <span class="rounded-full bg-darkroom/70 px-2 py-1">Gold</span>
+            <span class="rounded-full bg-darkroom/70 px-2 py-1">18 EXP</span>
+          </div>
+          <!-- shutter -->
+          <div class="absolute inset-x-0 bottom-0 flex items-center justify-center bg-gradient-to-t from-darkroom/90 to-transparent pb-4 pt-10">
+            <span class="grid size-14 place-items-center rounded-full border-4 border-darkroom-foreground/80">
+              <span class="size-10 rounded-full bg-primary"></span>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
-</div>
+</section>
 
-<div id="v-akun" hidden>
-  <nav><a class="logo" href="#/"><span class="brand">NamaBrand</span></a><button class="o" id="out" type="button">Keluar</button></nav>
-  <div class="box">
-    <h2>Acara saya</h2>
-    <p><a class="btn a" href="#/buat">Buat acara baru</a></p>
-    <div id="ak"></div>
+<!-- ============ FILM STRIP MARQUEE ============ -->
+<section aria-label="Contoh foto dari tamu" class="film-strip overflow-hidden">
+  <div class="marquee-track flex w-max gap-4 px-4" style="animation: marquee 45s linear infinite">
+    <!-- duplicate set x2 untuk loop mulus -->
+    <figure class="relative w-56 shrink-0 overflow-hidden rounded-sm">
+      <img src="https://images.unsplash.com/photo-1519741497674-611481863552?w=500&q=80&auto=format&fit=crop" alt="" class="aspect-[3/2] w-full object-cover" loading="lazy">
+      <figcaption class="absolute bottom-1.5 left-2 font-mono text-[10px] uppercase tracking-wider text-secondary">Lantai dansa · 21:47</figcaption>
+    </figure>
+    <figure class="relative w-56 shrink-0 overflow-hidden rounded-sm">
+      <img src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?w=500&q=80&auto=format&fit=crop" alt="" class="aspect-[3/2] w-full object-cover" loading="lazy">
+      <figcaption class="absolute bottom-1.5 left-2 font-mono text-[10px] uppercase tracking-wider text-secondary">Meja 7 · 20:12</figcaption>
+    </figure>
+    <figure class="relative w-56 shrink-0 overflow-hidden rounded-sm">
+      <img src="https://images.unsplash.com/photo-1518199266791-5375a83190b7?w=500&q=80&auto=format&fit=crop" alt="" class="aspect-[3/2] w-full object-cover" loading="lazy">
+      <figcaption class="absolute bottom-1.5 left-2 font-mono text-[10px] uppercase tracking-wider text-secondary">Pelaminan · 19:30</figcaption>
+    </figure>
+    <figure class="relative w-56 shrink-0 overflow-hidden rounded-sm">
+      <img src="https://images.unsplash.com/photo-1535140728325-a4d3707eee61?w=500&q=80&auto=format&fit=crop" alt="" class="aspect-[3/2] w-full object-cover" loading="lazy">
+      <figcaption class="absolute bottom-1.5 left-2 font-mono text-[10px] uppercase tracking-wider text-secondary">Taman · 16:05</figcaption>
+    </figure>
+    <figure class="relative w-56 shrink-0 overflow-hidden rounded-sm">
+      <img src="https://images.unsplash.com/photo-1464349095431-e9a21285b5f3?w=500&q=80&auto=format&fit=crop" alt="" class="aspect-[3/2] w-full object-cover" loading="lazy">
+      <figcaption class="absolute bottom-1.5 left-2 font-mono text-[10px] uppercase tracking-wider text-secondary">Tiup lilin · 22:18</figcaption>
+    </figure>
+    <figure class="relative w-56 shrink-0 overflow-hidden rounded-sm">
+      <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=500&q=80&auto=format&fit=crop" alt="" class="aspect-[3/2] w-full object-cover" loading="lazy">
+      <figcaption class="absolute bottom-1.5 left-2 font-mono text-[10px] uppercase tracking-wider text-secondary">Booth kopi · 15:40</figcaption>
+    </figure>
+    <!-- duplikat -->
+    <figure class="relative w-56 shrink-0 overflow-hidden rounded-sm">
+      <img src="https://images.unsplash.com/photo-1519741497674-611481863552?w=500&q=80&auto=format&fit=crop" alt="" class="aspect-[3/2] w-full object-cover" loading="lazy">
+      <figcaption class="absolute bottom-1.5 left-2 font-mono text-[10px] uppercase tracking-wider text-secondary">Lantai dansa · 21:47</figcaption>
+    </figure>
+    <figure class="relative w-56 shrink-0 overflow-hidden rounded-sm">
+      <img src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?w=500&q=80&auto=format&fit=crop" alt="" class="aspect-[3/2] w-full object-cover" loading="lazy">
+      <figcaption class="absolute bottom-1.5 left-2 font-mono text-[10px] uppercase tracking-wider text-secondary">Meja 7 · 20:12</figcaption>
+    </figure>
+    <figure class="relative w-56 shrink-0 overflow-hidden rounded-sm">
+      <img src="https://images.unsplash.com/photo-1518199266791-5375a83190b7?w=500&q=80&auto=format&fit=crop" alt="" class="aspect-[3/2] w-full object-cover" loading="lazy">
+      <figcaption class="absolute bottom-1.5 left-2 font-mono text-[10px] uppercase tracking-wider text-secondary">Pelaminan · 19:30</figcaption>
+    </figure>
+    <figure class="relative w-56 shrink-0 overflow-hidden rounded-sm">
+      <img src="https://images.unsplash.com/photo-1535140728325-a4d3707eee61?w=500&q=80&auto=format&fit=crop" alt="" class="aspect-[3/2] w-full object-cover" loading="lazy">
+      <figcaption class="absolute bottom-1.5 left-2 font-mono text-[10px] uppercase tracking-wider text-secondary">Taman · 16:05</figcaption>
+    </figure>
+    <figure class="relative w-56 shrink-0 overflow-hidden rounded-sm">
+      <img src="https://images.unsplash.com/photo-1464349095431-e9a21285b5f3?w=500&q=80&auto=format&fit=crop" alt="" class="aspect-[3/2] w-full object-cover" loading="lazy">
+      <figcaption class="absolute bottom-1.5 left-2 font-mono text-[10px] uppercase tracking-wider text-secondary">Tiup lilin · 22:18</figcaption>
+    </figure>
+    <figure class="relative w-56 shrink-0 overflow-hidden rounded-sm">
+      <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=500&q=80&auto=format&fit=crop" alt="" class="aspect-[3/2] w-full object-cover" loading="lazy">
+      <figcaption class="absolute bottom-1.5 left-2 font-mono text-[10px] uppercase tracking-wider text-secondary">Booth kopi · 15:40</figcaption>
+    </figure>
   </div>
-</div>
+</section>
 
-<div id="v-cam" hidden>
-  <video id="vd" playsinline muted autoplay></video><canvas id="cv" hidden></canvas>
-  <div class="top"><span>Sisa <b id="sisa"></b> jepretan</span><button class="o" id="flip" type="button">Balik kamera</button></div>
-  <div class="bot"><a class="btn o" id="toAlb" style="padding:6px 14px;color:#fff;border-color:rgba(255,255,255,.6)" href="#">Album</a><button id="shut" type="button" aria-label="Jepret"></button><span style="width:64px"></span></div>
-  <div class="intro" id="intro"></div>
-</div>
+<!-- ============ PROBLEM / SOLUTION ============ -->
+<section class="mx-auto max-w-6xl px-5 py-24">
+  <div class="grid gap-12 lg:grid-cols-2">
+    <h2 class="font-display text-5xl leading-[1] text-balance sm:text-6xl">
+      Dari foto yang tercecer, <em class="italic">ke satu album.</em>
+    </h2>
+    <div class="grid gap-4 sm:grid-cols-2">
+      <div class="rounded-2xl border border-border bg-muted/60 p-6">
+        <p class="mb-4 font-mono text-xs uppercase tracking-widest text-muted-foreground">Biasanya</p>
+        <ul class="space-y-3 text-sm text-muted-foreground">
+          <li class="flex gap-2"><i data-lucide="x" class="mt-0.5 size-4 shrink-0 text-destructive"></i>Foto tersebar di puluhan HP tamu</li>
+          <li class="flex gap-2"><i data-lucide="x" class="mt-0.5 size-4 shrink-0 text-destructive"></i>Menagih foto di grup WhatsApp berminggu-minggu</li>
+          <li class="flex gap-2"><i data-lucide="x" class="mt-0.5 size-4 shrink-0 text-destructive"></i>Tamu malas install aplikasi</li>
+          <li class="flex gap-2"><i data-lucide="x" class="mt-0.5 size-4 shrink-0 text-destructive"></i>Foto bagus tenggelam di ratusan foto mirip</li>
+        </ul>
+      </div>
+      <div class="rounded-2xl border border-primary/30 bg-card p-6 shadow-print">
+        <p class="mb-4 font-mono text-xs uppercase tracking-widest text-primary">Dengan Momenhadir</p>
+        <ul class="space-y-3 text-sm">
+          <li class="flex gap-2"><i data-lucide="check" class="mt-0.5 size-4 shrink-0 text-primary"></i>Foto terkumpul saat acara berlangsung</li>
+          <li class="flex gap-2"><i data-lucide="check" class="mt-0.5 size-4 shrink-0 text-primary"></i>Cukup scan QR, langsung jepret</li>
+          <li class="flex gap-2"><i data-lucide="check" class="mt-0.5 size-4 shrink-0 text-primary"></i>Jepretan terbatas, setiap foto lebih bermakna</li>
+          <li class="flex gap-2"><i data-lucide="check" class="mt-0.5 size-4 shrink-0 text-primary"></i>Tamu bisa langsung menemukan fotonya sendiri</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
 
-<div id="v-alb" hidden>
-  <nav><a class="logo" href="#/"><span class="brand">NamaBrand</span></a></nav>
-  <div class="box"><h2 id="an">Album</h2><div id="ab"></div></div>
-</div>
-<div id="toast" role="status"></div>
+<!-- ============ CARA KERJA ============ -->
+<section id="cara-kerja" class="scroll-mt-20 border-y border-border bg-card/60">
+  <div class="mx-auto max-w-6xl px-5 py-24">
+    <p class="font-mono text-xs uppercase tracking-widest text-primary">Cara kerja</p>
+    <h2 class="mt-3 max-w-2xl font-display text-5xl leading-[1] sm:text-6xl">
+      Empat langkah, <em class="italic">lalu tamu yang memotret.</em>
+    </h2>
+    <ol class="mt-14 grid gap-6 md:grid-cols-4">
+      <li class="relative rounded-2xl border border-border bg-background p-6">
+        <span class="font-mono text-xs text-muted-foreground">01</span>
+        <i data-lucide="sparkles" class="mt-6 block size-7 text-primary"></i>
+        <h3 class="mt-4 text-lg font-semibold">Buat acara</h3>
+        <p class="mt-2 text-sm text-muted-foreground">Isi nama acara, pilih preset film, jatah jepretan, dan kapan album dibuka.</p>
+      </li>
+      <li class="relative rounded-2xl border border-border bg-background p-6">
+        <span class="font-mono text-xs text-muted-foreground">02</span>
+        <i data-lucide="qr-code" class="mt-6 block size-7 text-primary"></i>
+        <h3 class="mt-4 text-lg font-semibold">Tempel QR</h3>
+        <p class="mt-2 text-sm text-muted-foreground">Cetak kartu QR untuk meja tamu atau bagikan link lewat WhatsApp.</p>
+      </li>
+      <li class="relative rounded-2xl border border-border bg-background p-6">
+        <span class="font-mono text-xs text-muted-foreground">03</span>
+        <i data-lucide="camera" class="mt-6 block size-7 text-primary"></i>
+        <h3 class="mt-4 text-lg font-semibold">Tamu memotret</h3>
+        <p class="mt-2 text-sm text-muted-foreground">Satu scan, kamera terbuka di browser HP. Tanpa install, tanpa daftar.</p>
+      </li>
+      <li class="relative rounded-2xl border border-border bg-background p-6">
+        <span class="font-mono text-xs text-muted-foreground">04</span>
+        <i data-lucide="book-heart" class="mt-6 block size-7 text-primary"></i>
+        <h3 class="mt-4 text-lg font-semibold">Album terbuka</h3>
+        <p class="mt-2 text-sm text-muted-foreground">Semua jepretan terkumpul di satu album privat, siap diunduh dan dicetak.</p>
+      </li>
+    </ol>
+  </div>
+</section>
 
-<script>
-/* ===== PENGATURAN ===== */
-var CFG={brand:'NamaBrand',url:'',key:'',wa:'6281200000000'};   // url & key dari Supabase (Project Settings > API); wa = nomor WhatsApp admin
-/* ====================== */
-(function(){
-  var $=function(i){return document.getElementById(i)},V=['home','buat','masuk','akun','cam','alb'],stream=null,facing='environment',E=null,busy=false,pakai=0,nama='';
-  document.title=CFG.brand+': Kamera Sekali Pakai Digital untuk Acara';
-  Array.prototype.forEach.call(document.querySelectorAll('.brand'),function(e){e.textContent=CFG.brand;});
-  function toast(t){var e=$('toast');e.textContent=t;e.classList.add('on');setTimeout(function(){e.classList.remove('on');},2300);}
-  function sbh(x){var h={apikey:CFG.key};if(/^eyJ/.test(CFG.key))h.Authorization='Bearer '+CFG.key;for(var k in x)h[k]=x[k];return h;}
-  var S=null;try{S=JSON.parse(localStorage.getItem('sess')||'null');}catch(e){}
-  function nav(){var a=$('navA');if(a){a.textContent=S?'Acara saya':'Masuk';a.href=S?'#/akun':'#/masuk';}}
-  function setS(r){S=r&&r.access_token?{a:r.access_token,r:r.refresh_token,x:Date.now()+(r.expires_in||3600)*1000}:null;localStorage.setItem('sess',JSON.stringify(S));nav();}
-  function auth(path,body,q){return fetch(CFG.url+'/auth/v1/'+path+(q||''),{method:'POST',headers:{apikey:CFG.key,'Content-Type':'application/json'},body:JSON.stringify(body)}).then(function(r){return r.json().then(function(j){if(!r.ok)throw j;return j;});});}
-  function tok(){
-    if(!S)return Promise.resolve(null);
-    if(S.x-Date.now()>60000)return Promise.resolve(S.a);
-    return auth('token',{refresh_token:S.r},'?grant_type=refresh_token').then(function(j){setS(j);return S&&S.a;}).catch(function(){setS(null);return null;});
-  }
-  function rpc(n,a){
-    return tok().then(function(t){
-      var h=sbh({'Content-Type':'application/json'});if(t)h.Authorization='Bearer '+t;
-      return fetch(CFG.url+'/rest/v1/rpc/'+n,{method:'POST',headers:h,body:JSON.stringify(a||{})});
-    }).then(function(r){if(!r.ok)throw r.status;return r.text();}).then(function(t){return t?JSON.parse(t):null;});
-  }
-  function show(v){V.forEach(function(x){$('v-'+x).hidden=x!==v;});document.body.className=v==='cam'?'camv':'';window.scrollTo(0,0);}
-  function note(v,html){show(v);}
-  function stopCam(){if(stream){stream.getTracks().forEach(function(t){t.stop();});stream=null;}}
-  function ok(){if(CFG.url&&CFG.key)return true;toast('Belum tersambung ke database (isi CFG.url dan CFG.key)');return false;}
-  function esc(s){var d=document.createElement('div');d.textContent=s;return d.innerHTML;}
+<!-- ============ FITUR INTI ============ -->
+<section id="fitur" class="mx-auto max-w-6xl scroll-mt-20 px-5 py-24">
+  <div class="grid gap-12 lg:grid-cols-[1fr_1.3fr]">
+    <div class="space-y-6">
+      <p class="font-mono text-xs uppercase tracking-widest text-primary">Yang terbaik dari keduanya</p>
+      <h2 class="font-display text-5xl leading-[1] sm:text-6xl">
+        Rasa kamera film, <em class="italic">kemudahan HP.</em>
+      </h2>
+      <p class="text-muted-foreground">
+        Kami menggabungkan semua yang orang sukai dari kamera sekali pakai: jatah jepretan, nuansa film, dan
+        kejutan saat foto "dicuci" — dengan kemudahan scan QR dan galeri privat.
+      </p>
+      <div class="flex flex-wrap gap-2">
+        <span class="rounded-full border border-border bg-card px-3 py-1 font-mono text-xs uppercase tracking-wider">Gold</span>
+        <span class="rounded-full border border-border bg-card px-3 py-1 font-mono text-xs uppercase tracking-wider">Pop</span>
+        <span class="rounded-full border border-border bg-card px-3 py-1 font-mono text-xs uppercase tracking-wider">Mono</span>
+        <span class="rounded-full border border-border bg-card px-3 py-1 font-mono text-xs uppercase tracking-wider">Night</span>
+        <span class="rounded-full border border-border bg-card px-3 py-1 font-mono text-xs uppercase tracking-wider">Digicam</span>
+      </div>
+    </div>
+    <div class="grid gap-4 sm:grid-cols-2">
+      <div class="rounded-2xl border border-border bg-card p-6 transition-transform hover:-translate-y-1">
+        <i data-lucide="smartphone" class="size-6 text-primary"></i>
+        <h3 class="mt-4 font-semibold">Tanpa aplikasi</h3>
+        <p class="mt-1.5 text-sm text-muted-foreground">Berjalan di browser iPhone dan Android. Tamu cukup scan dan ketik nama.</p>
+      </div>
+      <div class="rounded-2xl border border-border bg-card p-6 transition-transform hover:-translate-y-1">
+        <i data-lucide="film" class="size-6 text-primary"></i>
+        <h3 class="mt-4 font-semibold">Jatah 25 jepretan</h3>
+        <p class="mt-1.5 text-sm text-muted-foreground">Seperti roll film: terbatas, jadi tamu memilih momen yang paling berarti.</p>
+      </div>
+      <div class="rounded-2xl border border-border bg-card p-6 transition-transform hover:-translate-y-1">
+        <i data-lucide="sparkles" class="size-6 text-primary"></i>
+        <h3 class="mt-4 font-semibold">5 preset film</h3>
+        <p class="mt-1.5 text-sm text-muted-foreground">Gold, Pop, Mono, Night, dan Digicam. Semua foto punya nuansa yang sama.</p>
+      </div>
+      <div class="rounded-2xl border border-border bg-card p-6 transition-transform hover:-translate-y-1">
+        <i data-lucide="clock" class="size-6 text-primary"></i>
+        <h3 class="mt-4 font-semibold">Kamu atur pembukaan</h3>
+        <p class="mt-1.5 text-sm text-muted-foreground">Album terbuka langsung, atau jadi kejutan setelah acara selesai.</p>
+      </div>
+      <div class="rounded-2xl border border-border bg-card p-6 transition-transform hover:-translate-y-1">
+        <i data-lucide="frame" class="size-6 text-primary"></i>
+        <h3 class="mt-4 font-semibold">Bingkai polaroid</h3>
+        <p class="mt-1.5 text-sm text-muted-foreground">Setiap foto tampil seperti polaroid dengan nama acaramu di bawahnya.</p>
+      </div>
+      <div class="rounded-2xl border border-border bg-card p-6 transition-transform hover:-translate-y-1">
+        <i data-lucide="download" class="size-6 text-primary"></i>
+        <h3 class="mt-4 font-semibold">Unduh kapan saja</h3>
+        <p class="mt-1.5 text-sm text-muted-foreground">Kamu memegang semua foto resolusi penuh di dasbor privatmu.</p>
+      </div>
+    </div>
+  </div>
+</section>
 
-  function route(){
-    var p=location.hash.replace(/^#\/?/,'').split('/');stopCam();
-    if(p[0]==='buat'){if(!S){location.hash='#/masuk';return;}return buat();}
-    if(p[0]==='masuk')return masuk();
-    if(p[0]==='akun'){if(!S){location.hash='#/masuk';return;}return akun();}
-    if(p[0]==='e'&&p[1])return cam(p[1]);
-    if(p[0]==='a'&&p[1])return alb(p[1],p[2]);
-    show('home');
-  }
-  window.addEventListener('hashchange',route);
+<!-- ============ PLUS (DARK ROOM) ============ -->
+<section id="plus" class="grain relative scroll-mt-20 bg-darkroom text-darkroom-foreground">
+  <div class="mx-auto max-w-6xl px-5 py-24">
+    <p class="font-mono text-xs uppercase tracking-widest text-secondary">Nilai plus Momenhadir</p>
+    <h2 class="mt-3 max-w-3xl font-display text-5xl leading-[1] sm:text-6xl">
+      Bukan cuma album. <em class="italic text-secondary">Seluruh pengalaman tamu.</em>
+    </h2>
 
-  /* ---- buat acara ---- */
-  function buat(){
-    show('buat');$('fbox').hidden=false;$('res').hidden=true;
-    var d=new Date(Date.now()+864e5);d.setMinutes(d.getMinutes()-d.getTimezoneOffset());$('bk').value=d.toISOString().slice(0,16);
-  }
-  $('fb').addEventListener('submit',function(e){
-    e.preventDefault();if(!ok())return;
-    var b=$('bs');b.disabled=true;b.textContent='Membuat...';
-    rpc('buat_event',{p_nama:$('bn').value.trim(),p_preset:$('bp').value,p_maks:Math.max(1,Math.min(36,parseInt($('bm').value,10)||12)),p_buka:new Date($('bk').value).toISOString()})
-      .then(function(r){
-        var ev=Array.isArray(r)?r[0]:r,base=location.origin+location.pathname;
-        localStorage.setItem('host_'+ev.id,ev.token);
-        var l1=base+'#/e/'+ev.id;
-        $('l1').textContent=l1;$('l2').textContent=base+'#/a/'+ev.id;$('l3').textContent=base+'#/a/'+ev.id+'/'+ev.token;
-        $('fbox').hidden=true;$('res').hidden=false;
-        $('cp').onclick=function(){try{navigator.clipboard.writeText(l1).then(function(){toast('Link tersalin');});}catch(x){toast('Salin manual ya');}};
-        $('l3').parentNode.insertAdjacentHTML('afterend','<p class="msg" style="margin-top:12px">Acara ini <b>menunggu aktivasi</b>. Setelah pembayaran dikonfirmasi, kamera tamu bisa dipakai. <a href="'+wa(ev.id)+'" target="_blank" rel="noopener">Konfirmasi lewat WhatsApp</a></p>');
-        makeQR(l1);
-      }).catch(function(){toast('Gagal membuat acara. Coba lagi ya.');})
-      .then(function(){b.disabled=false;b.textContent='Buat acara';});
-  });
-  function makeQR(t){
-    var el=$('qr');el.textContent='';
-    function go(){try{new QRCode(el,{text:t,width:180,height:180});}catch(x){el.textContent='QR belum bisa dibuat. Pakai pembuat QR gratis dengan link di atas.';}}
-    if(window.QRCode)return go();
-    var s=document.createElement('script');s.src='https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js';s.onload=go;
-    s.onerror=function(){el.textContent='QR belum bisa dimuat. Pakai pembuat QR gratis dengan link di atas.';};document.head.appendChild(s);
-  }
+    <div class="mt-16 grid gap-6 lg:grid-cols-2">
+      <!-- Slideshow -->
+      <article class="overflow-hidden rounded-3xl border border-darkroom-foreground/10 bg-darkroom-foreground/5">
+        <div class="relative aspect-video overflow-hidden bg-black">
+          <img src="https://images.unsplash.com/photo-1535140728325-a4d3707eee61?w=900&q=80&auto=format&fit=crop"
+               alt="Slideshow foto tamu di layar venue"
+               class="h-full w-full object-cover opacity-90"
+               style="animation: kenBurns 20s ease-in-out infinite alternate">
+          <div class="absolute bottom-4 left-4 rounded-md bg-paper p-2 shadow-print">
+            <i data-lucide="qr-code" class="block size-10 text-foreground"></i>
+          </div>
+          <span class="absolute right-4 top-4 inline-flex items-center gap-1.5 rounded-full bg-primary px-2.5 py-1 font-mono text-[10px] uppercase tracking-wider text-primary-foreground">
+            <span class="size-1.5 animate-pulse rounded-full bg-primary-foreground"></span>Live
+          </span>
+        </div>
+        <div class="p-7">
+          <i data-lucide="monitor-play" class="size-6 text-secondary"></i>
+          <h3 class="mt-4 text-2xl font-semibold">Slideshow live di layar venue</h3>
+          <p class="mt-2 text-darkroom-muted">
+            Foto tamu muncul di proyektor atau TV beberapa detik setelah dijepret — lengkap dengan QR supaya
+            tamu lain ikut bergabung.
+          </p>
+        </div>
+      </article>
 
-  /* ---- kamera tamu ---- */
-  function film(x,w,h,p){
-    var im=x.getImageData(0,0,w,h),d=im.data,i,n,g;
-    for(i=0;i<d.length;i+=4){
-      n=(Math.random()-.5)*(p==='hitam'?26:18);
-      if(p==='hitam'){g=.3*d[i]+.59*d[i+1]+.11*d[i+2];g=(g-128)*1.15+128+n;d[i]=d[i+1]=d[i+2]=g;}
-      else if(p==='pudar'){d[i]=(d[i]-128)*.9+150+n;d[i+1]=(d[i+1]-128)*.9+148+n;d[i+2]=(d[i+2]-128)*.9+158+n;}
-      else{d[i]=(d[i]-128)*1.08+138+n;d[i+1]=(d[i+1]-128)*1.05+132+n;d[i+2]=(d[i+2]-128)*1.02+120+n;}
-    }
-    x.putImageData(im,0,0);
-    var gr=x.createRadialGradient(w/2,h/2,Math.min(w,h)*.35,w/2,h/2,Math.max(w,h)*.75);
-    gr.addColorStop(0,'rgba(0,0,0,0)');gr.addColorStop(1,'rgba(30,15,0,.45)');x.fillStyle=gr;x.fillRect(0,0,w,h);
-    var t=new Date();x.font='bold '+Math.round(w*.035)+'px monospace';x.fillStyle='#ff9a2e';x.textAlign='right';
-    x.fillText(t.getDate()+' '+(t.getMonth()+1)+" '"+String(t.getFullYear()).slice(2),w*.96,h*.96);
-  }
-  function startCam(){
-    stopCam();
-    navigator.mediaDevices.getUserMedia({video:{facingMode:facing,width:{ideal:1280},height:{ideal:1280}},audio:false})
-      .then(function(s){stream=s;$('vd').srcObject=s;$('vd').classList.toggle('mir',facing==='user');})
-      .catch(function(){toast('Kamera tidak bisa dibuka. Izinkan akses kamera ya.');});
-  }
-  function upd(){var s=Math.max(0,E.maks-pakai);$('sisa').textContent=s;$('shut').disabled=s<=0||busy;}
-  function cam(id){
-    show('cam');var it=$('intro');it.hidden=false;it.innerHTML='<h2>Memuat...</h2>';
-    if(!ok()){it.innerHTML='<h2>Belum tersambung</h2>';return;}
-    rpc('get_event',{p_id:id}).then(function(r){
-      E=Array.isArray(r)?r[0]:r;
-      if(!E){it.innerHTML='<h2>Acara tidak ditemukan</h2><p>Periksa lagi link atau QR-nya.</p>';return;}
-      if(!E.aktif){it.innerHTML='<h2>'+esc(E.nama)+'</h2><p>Acara ini belum aktif. Hubungi penyelenggara ya.</p>';return;}
-      E.id=id;pakai=parseInt(localStorage.getItem('pakai_'+id),10)||0;
-      it.innerHTML='<h2>'+esc(E.nama)+'</h2><p>Kamu punya <b>'+E.maks+'</b> jepretan, seperti satu rol film. Pilih momen terbaikmu. Foto terbuka untuk semua tamu setelah album dibuka.</p><label>Nama kamu<input id="gn" maxlength="40"></label><button class="a" id="gg" type="button">Mulai memotret</button>';
-      $('gn').value=localStorage.getItem('nama')||'';
-      $('gg').onclick=function(){
-        nama=$('gn').value.trim();if(!nama){$('gn').focus();return;}
-        localStorage.setItem('nama',nama);it.hidden=true;$('toAlb').href='#/a/'+id;upd();startCam();
-      };
-    }).catch(function(){it.innerHTML='<h2>Gagal memuat</h2><p>Coba muat ulang halaman.</p>';});
-  }
-  $('flip').addEventListener('click',function(){facing=facing==='user'?'environment':'user';startCam();});
-  $('shut').addEventListener('click',function(){
-    if(busy||!E||pakai>=E.maks)return;
-    var v=$('vd'),c=$('cv');if(!v.videoWidth)return;
-    var sc=Math.min(1,1280/Math.max(v.videoWidth,v.videoHeight));
-    c.width=Math.round(v.videoWidth*sc);c.height=Math.round(v.videoHeight*sc);
-    var x=c.getContext('2d');
-    if(facing==='user'){x.translate(c.width,0);x.scale(-1,1);}
-    x.drawImage(v,0,0,c.width,c.height);x.setTransform(1,0,0,1,0,0);
-    film(x,c.width,c.height,E.preset);
-    busy=true;upd();toast('Mengirim...');
-    var path=E.id+'/'+(crypto.randomUUID?crypto.randomUUID():Date.now()+''+Math.random().toString(16).slice(2))+'.jpg';
-    c.toBlob(function(blob){
-      fetch(CFG.url+'/storage/v1/object/foto/'+path,{method:'POST',headers:sbh({'Content-Type':'image/jpeg'}),body:blob})
-        .then(function(r){if(!r.ok)throw r.status;return rpc('tambah_foto',{p_id:E.id,p_tamu:nama,p_path:path});})
-        .then(function(){pakai++;localStorage.setItem('pakai_'+E.id,pakai);toast('Terkirim');})
-        .catch(function(){toast('Gagal kirim, coba lagi ya');})
-        .then(function(){busy=false;upd();});
-    },'image/jpeg',.78);
-  });
+      <!-- Find me -->
+      <article class="overflow-hidden rounded-3xl border border-darkroom-foreground/10 bg-darkroom-foreground/5">
+        <div class="relative grid aspect-video grid-cols-3 gap-1.5 bg-black p-1.5">
+          <div class="overflow-hidden rounded-sm"><img src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?w=300&q=80&auto=format&fit=crop" alt="" class="h-full w-full object-cover opacity-35 grayscale"></div>
+          <div class="relative overflow-hidden rounded-sm"><img src="https://images.unsplash.com/photo-1519741497674-611481863552?w=300&q=80&auto=format&fit=crop" alt="" class="h-full w-full object-cover"><span class="absolute inset-1 rounded-sm ring-2 ring-secondary"></span></div>
+          <div class="overflow-hidden rounded-sm"><img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=300&q=80&auto=format&fit=crop" alt="" class="h-full w-full object-cover opacity-35 grayscale"></div>
+          <div class="overflow-hidden rounded-sm"><img src="https://images.unsplash.com/photo-1464349095431-e9a21285b5f3?w=300&q=80&auto=format&fit=crop" alt="" class="h-full w-full object-cover opacity-35 grayscale"></div>
+          <div class="relative overflow-hidden rounded-sm"><img src="https://images.unsplash.com/photo-1518199266791-5375a83190b7?w=300&q=80&auto=format&fit=crop" alt="" class="h-full w-full object-cover"><span class="absolute inset-1 rounded-sm ring-2 ring-secondary"></span></div>
+          <div class="overflow-hidden rounded-sm"><img src="https://images.unsplash.com/photo-1535140728325-a4d3707eee61?w=300&q=80&auto=format&fit=crop" alt="" class="h-full w-full object-cover opacity-35 grayscale"></div>
+        </div>
+        <div class="p-7">
+          <i data-lucide="scan-face" class="size-6 text-secondary"></i>
+          <h3 class="mt-4 text-2xl font-semibold">Temukan fotomu dengan satu selfie</h3>
+          <p class="mt-2 text-darkroom-muted">
+            Tamu tidak perlu menggulir ratusan foto. Ambil selfie, dan semua foto yang menampilkan wajahmu
+            langsung terkumpul.
+          </p>
+        </div>
+      </article>
 
-  /* ---- album ---- */
-  function alb(id,token){
-    show('alb');var box=$('ab');box.innerHTML='<p>Memuat album...</p>';
-    if(!ok()){box.innerHTML='<p>Belum tersambung.</p>';return;}
-    Promise.all([rpc('get_event',{p_id:id}),rpc('list_foto',{p_id:id,p_token:token||null})]).then(function(a){
-      var ev=Array.isArray(a[0])?a[0][0]:a[0],list=a[1]||[];
-      if(!ev){box.innerHTML='<p>Acara tidak ditemukan.</p>';return;}
-      $('an').textContent=ev.nama;
-      var open=new Date()>=new Date(ev.buka);
-      if(!open&&!list.length){box.innerHTML='<div class="msg">Album belum dibuka. Sudah terkumpul <b>'+ev.total+'</b> foto dari para tamu. Terbuka pada '+esc(new Date(ev.buka).toLocaleString('id-ID',{day:'numeric',month:'long',year:'numeric',hour:'2-digit',minute:'2-digit'}))+'.</div>';return;}
-      if(!list.length){box.innerHTML='<p>Belum ada foto.</p>';return;}
-      box.textContent='';var g=document.createElement('div');g.className='grid';
-      list.forEach(function(f){
-        var u=CFG.url+'/storage/v1/object/public/foto/'+f.path,a=document.createElement('a'),im=document.createElement('img');
-        a.href=u;a.target='_blank';a.rel='noopener';a.title=f.tamu;im.loading='lazy';im.alt='Foto dari '+f.tamu;im.src=u;a.appendChild(im);g.appendChild(a);
-      });
-      box.appendChild(g);
-      var p=document.createElement('p');p.style.cssText='margin-top:12px;color:#6B665C;font-size:.92rem';p.textContent='Ketuk foto untuk ukuran penuh, cubit untuk zoom, tekan lama untuk menyimpan.';box.appendChild(p);
-    }).catch(function(){box.innerHTML='<p>Album belum bisa dimuat.</p>';});
-  }
-  function wa(id){return 'https://wa.me/'+CFG.wa+'?text='+encodeURIComponent('Halo, saya mau mengaktifkan acara dengan kode '+id+'.');}
+      <!-- Guestbook -->
+      <article class="rounded-3xl border border-darkroom-foreground/10 bg-darkroom-foreground/5 p-7">
+        <i data-lucide="mic" class="size-6 text-secondary"></i>
+        <h3 class="mt-4 text-2xl font-semibold">Buku tamu suara &amp; video</h3>
+        <p class="mt-2 text-darkroom-muted">
+          Ucapan tulus lebih terasa saat didengar. Tamu bisa menulis, merekam suara, atau video singkat langsung
+          dari HP.
+        </p>
+        <div class="mt-6 flex items-center gap-3 rounded-2xl bg-darkroom-foreground/10 p-4">
+          <span class="grid size-10 place-items-center rounded-full bg-primary text-primary-foreground">
+            <i data-lucide="mic" class="text-sm"></i>
+          </span>
+          <div class="flex h-8 flex-1 items-center gap-[3px]">
+            <span class="w-1 rounded-full bg-secondary/80" style="height: 40%"></span>
+            <span class="w-1 rounded-full bg-secondary/80" style="height: 65%"></span>
+            <span class="w-1 rounded-full bg-secondary/80" style="height: 30%"></span>
+            <span class="w-1 rounded-full bg-secondary/80" style="height: 80%"></span>
+            <span class="w-1 rounded-full bg-secondary/80" style="height: 55%"></span>
+            <span class="w-1 rounded-full bg-secondary/80" style="height: 90%"></span>
+            <span class="w-1 rounded-full bg-secondary/80" style="height: 45%"></span>
+            <span class="w-1 rounded-full bg-secondary/80" style="height: 70%"></span>
+            <span class="w-1 rounded-full bg-secondary/80" style="height: 35%"></span>
+            <span class="w-1 rounded-full bg-secondary/80" style="height: 85%"></span>
+            <span class="w-1 rounded-full bg-secondary/80" style="height: 50%"></span>
+            <span class="w-1 rounded-full bg-secondary/80" style="height: 60%"></span>
+            <span class="w-1 rounded-full bg-secondary/80" style="height: 75%"></span>
+            <span class="w-1 rounded-full bg-secondary/80" style="height: 40%"></span>
+            <span class="w-1 rounded-full bg-secondary/80" style="height: 55%"></span>
+            <span class="w-1 rounded-full bg-secondary/80" style="height: 30%"></span>
+            <span class="w-1 rounded-full bg-secondary/80" style="height: 70%"></span>
+            <span class="w-1 rounded-full bg-secondary/80" style="height: 45%"></span>
+          </div>
+          <span class="font-mono text-xs text-darkroom-muted">0:24</span>
+        </div>
+        <p class="mt-3 text-sm italic text-darkroom-muted">"Selamat ya Dita &amp; Raka, langgeng terus!" — Tante Rina</p>
+      </article>
 
-  /* ---- masuk / daftar ---- */
-  var daftar=false;
-  function masuk(){show('masuk');setMode(false);$('mx').hidden=true;}
-  function setMode(d){daftar=d;$('mt').textContent=d?'Daftar':'Masuk';$('mb').textContent=d?'Daftar':'Masuk';$('mw').textContent=d?'Sudah punya akun? Masuk':'Belum punya akun? Daftar';$('mp').autocomplete=d?'new-password':'current-password';}
-  $('mw').addEventListener('click',function(){setMode(!daftar);});
-  $('fm').addEventListener('submit',function(e){
-    e.preventDefault();if(!ok())return;
-    var b=$('mb'),x=$('mx'),em=$('me').value.trim(),pw=$('mp').value;b.disabled=true;x.hidden=true;
-    (daftar?auth('signup',{email:em,password:pw}):auth('token',{email:em,password:pw},'?grant_type=password'))
-      .then(function(j){
-        if(j&&j.access_token){setS(j);location.hash='#/akun';}
-        else{x.hidden=false;x.textContent='Akun dibuat. Cek email kamu untuk konfirmasi, lalu masuk.';setMode(false);}
-      })
-      .catch(function(j){x.hidden=false;x.textContent=(j&&(j.msg||j.error_description||j.message))||'Gagal. Periksa email dan kata sandi ya.';})
-      .then(function(){b.disabled=false;});
-  });
-  $('out').addEventListener('click',function(){setS(null);location.hash='#/';});
+      <!-- Photobook -->
+      <article class="rounded-3xl border border-darkroom-foreground/10 bg-darkroom-foreground/5 p-7">
+        <i data-lucide="book-heart" class="size-6 text-secondary"></i>
+        <h3 class="mt-4 text-2xl font-semibold">Cetak jadi photobook</h3>
+        <p class="mt-2 text-darkroom-muted">
+          Pilih foto favorit dari album, kami cetak jadi buku yang bisa dipegang dan diwariskan.
+        </p>
+        <ul class="mt-6 divide-y divide-darkroom-foreground/10 rounded-2xl bg-darkroom-foreground/10">
+          <li class="flex items-center justify-between gap-4 px-4 py-3 text-sm">
+            <span><span class="font-semibold">Ringkas</span><span class="block text-xs text-darkroom-muted">20 halaman · A5 · hardcover</span></span>
+            <span class="font-mono">Rp249rb</span>
+          </li>
+          <li class="flex items-center justify-between gap-4 px-4 py-3 text-sm">
+            <span><span class="font-semibold">Klasik</span><span class="block text-xs text-darkroom-muted">40 halaman · A4 · hardcover</span></span>
+            <span class="font-mono">Rp429rb</span>
+          </li>
+          <li class="flex items-center justify-between gap-4 px-4 py-3 text-sm">
+            <span><span class="font-semibold">Warisan</span><span class="block text-xs text-darkroom-muted">80 halaman · A4 · linen box</span></span>
+            <span class="font-mono">Rp749rb</span>
+          </li>
+        </ul>
+      </article>
+    </div>
+  </div>
+</section>
 
-  /* ---- acara saya ---- */
-  function akun(){
-    show('akun');var box=$('ak');box.innerHTML='<p>Memuat...</p>';
-    rpc('acara_saya').then(function(list){
-      list=list||[];box.textContent='';
-      if(!list.length){box.innerHTML='<p style="margin-top:14px">Belum ada acara.</p>';return;}
-      var base=location.origin+location.pathname;
-      list.forEach(function(e){
-        var c=document.createElement('div');c.className='lk';
-        c.innerHTML='<b>'+esc(e.nama)+'</b><span class="chip'+(e.aktif?' on':'')+'">'+(e.aktif?'Aktif':'Menunggu aktivasi')+'</span><small>'+e.total+' foto, maks '+e.maks+' jepretan per tamu</small>';
-        var p=document.createElement('p');p.style.margin='10px 0 0';
-        function link(t,h,ext){var a=document.createElement('a');a.className='btn o';a.style.cssText='padding:6px 14px;font-size:.9rem;margin:0 6px 6px 0';a.textContent=t;a.href=h;if(ext){a.target='_blank';a.rel='noopener';}p.appendChild(a);return a;}
-        var cp=document.createElement('button');cp.className='o';cp.type='button';cp.style.cssText='padding:6px 14px;font-size:.9rem;margin:0 6px 6px 0';cp.textContent='Salin link tamu';
-        cp.onclick=function(){try{navigator.clipboard.writeText(base+'#/e/'+e.id).then(function(){toast('Link tersalin');});}catch(x){toast('Salin manual ya');}};
-        p.appendChild(cp);link('Album','#/a/'+e.id);
-        if(!e.aktif)link('Aktifkan lewat WhatsApp',wa(e.id),true);
-        c.appendChild(p);box.appendChild(c);
-      });
-    }).catch(function(){box.innerHTML='<p>Gagal memuat. Coba masuk lagi.</p>';});
-  }
-  nav();
-  route();
-})();
-</script>
+<!-- ============ USE CASES ============ -->
+<section class="mx-auto max-w-6xl px-5 py-24">
+  <h2 class="max-w-2xl font-display text-5xl leading-[1] sm:text-6xl">
+    Untuk setiap acara <em class="italic">yang layak diingat.</em>
+  </h2>
+  <div class="mt-14 grid gap-8 sm:grid-cols-3">
+    <div class="bg-white p-3 pb-9 shadow-print" style="transform: rotate(-2deg)">
+      <img src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?w=600&q=80&auto=format&fit=crop" alt="Tamu pernikahan tertawa di meja" class="aspect-square w-full object-cover">
+      <p class="mt-3 text-center font-display text-base italic">Pernikahan</p>
+      <p class="text-center font-mono text-[10px] uppercase tracking-widest text-muted-foreground">Resepsi</p>
+    </div>
+    <div class="bg-white p-3 pb-9 shadow-print" style="transform: rotate(1.5deg)">
+      <img src="https://images.unsplash.com/photo-1464349095431-e9a21285b5f3?w=600&q=80&auto=format&fit=crop" alt="Teman-teman merayakan ulang tahun" class="aspect-square w-full object-cover">
+      <p class="mt-3 text-center font-display text-base italic">Ulang tahun</p>
+      <p class="text-center font-mono text-[10px] uppercase tracking-widest text-muted-foreground">Pesta</p>
+    </div>
+    <div class="bg-white p-3 pb-9 shadow-print" style="transform: rotate(-1deg)">
+      <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=600&q=80&auto=format&fit=crop" alt="Gathering kantor di kafe" class="aspect-square w-full object-cover">
+      <p class="mt-3 text-center font-display text-base italic">Gathering &amp; event</p>
+      <p class="text-center font-mono text-[10px] uppercase tracking-widest text-muted-foreground">Komunitas</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ HARGA ============ -->
+<section id="harga" class="scroll-mt-20 border-y border-border bg-card/60">
+  <div class="mx-auto max-w-6xl px-5 py-24">
+    <p class="font-mono text-xs uppercase tracking-widest text-primary">Harga</p>
+    <h2 class="mt-3 max-w-2xl font-display text-5xl leading-[1] sm:text-6xl">
+      Satu acara, <em class="italic">satu harga.</em>
+    </h2>
+    <p class="mt-4 max-w-xl text-muted-foreground">
+      Semua paket sudah termasuk slideshow live, buku tamu suara &amp; video, dan temukan fotomu.
+    </p>
+
+    <div class="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
+      <!-- Gratis -->
+      <div class="flex flex-col rounded-2xl border border-border bg-background p-6">
+        <p class="font-display text-2xl">Gratis</p>
+        <p class="mt-3 font-display text-4xl">Rp0</p>
+        <p class="mt-1 font-mono text-xs uppercase tracking-wider text-muted-foreground">5 tamu</p>
+        <ul class="mt-5 space-y-2 text-sm text-muted-foreground">
+          <li class="flex gap-2"><i data-lucide="check" class="mt-0.5 size-4 shrink-0 text-primary"></i>25 jepretan / tamu</li>
+          <li class="flex gap-2"><i data-lucide="check" class="mt-0.5 size-4 shrink-0 text-primary"></i>1 preset film</li>
+          <li class="flex gap-2"><i data-lucide="check" class="mt-0.5 size-4 shrink-0 text-primary"></i>Album privat</li>
+        </ul>
+        <a href="#" class="mt-6 rounded-full border border-foreground/20 px-4 py-2.5 text-center text-sm font-semibold hover:bg-muted">Mulai</a>
+      </div>
+
+      <!-- Intim (featured) -->
+      <div class="relative flex flex-col rounded-2xl border-2 border-primary bg-card p-6 shadow-print">
+        <span class="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-primary px-3 py-1 font-mono text-[10px] uppercase tracking-widest text-primary-foreground">Paling populer</span>
+        <p class="font-display text-2xl">Intim</p>
+        <p class="mt-3 font-display text-4xl">Rp79rb</p>
+        <p class="mt-1 font-mono text-xs uppercase tracking-wider text-muted-foreground">25 tamu</p>
+        <ul class="mt-5 space-y-2 text-sm">
+          <li class="flex gap-2"><i data-lucide="check" class="mt-0.5 size-4 shrink-0 text-primary"></i>25 jepretan / tamu</li>
+          <li class="flex gap-2"><i data-lucide="check" class="mt-0.5 size-4 shrink-0 text-primary"></i>5 preset film</li>
+          <li class="flex gap-2"><i data-lucide="check" class="mt-0.5 size-4 shrink-0 text-primary"></i>Slideshow live</li>
+          <li class="flex gap-2"><i data-lucide="check" class="mt-0.5 size-4 shrink-0 text-primary"></i>Temukan fotomu</li>
+        </ul>
+        <a href="#" class="mt-6 rounded-full bg-primary px-4 py-2.5 text-center text-sm font-semibold text-primary-foreground hover:bg-primary/90">Pilih paket</a>
+      </div>
+
+      <!-- Acara -->
+      <div class="flex flex-col rounded-2xl border border-border bg-background p-6">
+        <p class="font-display text-2xl">Acara</p>
+        <p class="mt-3 font-display text-4xl">Rp149rb</p>
+        <p class="mt-1 font-mono text-xs uppercase tracking-wider text-muted-foreground">80 tamu</p>
+        <ul class="mt-5 space-y-2 text-sm text-muted-foreground">
+          <li class="flex gap-2"><i data-lucide="check" class="mt-0.5 size-4 shrink-0 text-primary"></i>25 jepretan / tamu</li>
+          <li class="flex gap-2"><i data-lucide="check" class="mt-0.5 size-4 shrink-0 text-primary"></i>5 preset film</li>
+          <li class="flex gap-2"><i data-lucide="check" class="mt-0.5 size-4 shrink-0 text-primary"></i>Slideshow live</li>
+          <li class="flex gap-2"><i data-lucide="check" class="mt-0.5 size-4 shrink-0 text-primary"></i>Buku tamu suara</li>
+        </ul>
+        <a href="#" class="mt-6 rounded-full border border-foreground/20 px-4 py-2.5 text-center text-sm font-semibold hover:bg-muted">Pilih paket</a>
+      </div>
+
+      <!-- Meriah -->
+      <div class="flex flex-col rounded-2xl border border-border bg-background p-6">
+        <p class="font-display text-2xl">Meriah</p>
+        <p class="mt-3 font-display text-4xl">Rp249rb</p>
+        <p class="mt-1 font-mono text-xs uppercase tracking-wider text-muted-foreground">150 tamu</p>
+        <ul class="mt-5 space-y-2 text-sm text-muted-foreground">
+          <li class="flex gap-2"><i data-lucide="check" class="mt-0.5 size-4 shrink-0 text-primary"></i>Semua fitur Acara</li>
+          <li class="flex gap-2"><i data-lucide="check" class="mt-0.5 size-4 shrink-0 text-primary"></i>Jepretan 36 / tamu</li>
+          <li class="flex gap-2"><i data-lucide="check" class="mt-0.5 size-4 shrink-0 text-primary"></i>Unduh ZIP</li>
+        </ul>
+        <a href="#" class="mt-6 rounded-full border border-foreground/20 px-4 py-2.5 text-center text-sm font-semibold hover:bg-muted">Pilih paket</a>
+      </div>
+
+      <!-- Akbar -->
+      <div class="flex flex-col rounded-2xl border border-border bg-foreground p-6 text-background">
+        <p class="font-display text-2xl">Akbar</p>
+        <p class="mt-3 font-display text-4xl">Rp399rb</p>
+        <p class="mt-1 font-mono text-xs uppercase tracking-wider text-background/60">300 tamu</p>
+        <ul class="mt-5 space-y-2 text-sm text-background/80">
+          <li class="flex gap-2"><i data-lucide="check" class="mt-0.5 size-4 shrink-0 text-secondary"></i>Semua fitur Meriah</li>
+          <li class="flex gap-2"><i data-lucide="check" class="mt-0.5 size-4 shrink-0 text-secondary"></i>Jepretan tanpa batas</li>
+          <li class="flex gap-2"><i data-lucide="check" class="mt-0.5 size-4 shrink-0 text-secondary"></i>Prioritas support</li>
+        </ul>
+        <a href="#" class="mt-6 rounded-full bg-background px-4 py-2.5 text-center text-sm font-semibold text-foreground hover:bg-muted">Pilih paket</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FAQ ============ -->
+<section id="faq" class="mx-auto max-w-3xl scroll-mt-20 px-5 py-24">
+  <h2 class="font-display text-5xl leading-[1] sm:text-6xl">
+    Pertanyaan? <em class="italic">Kami bantu.</em>
+  </h2>
+  <div class="mt-10">
+    <details class="faq">
+      <summary>Apakah tamu perlu mengunduh aplikasi atau membuat akun?</summary>
+      <p>Tidak. Tamu cukup scan QR atau membuka link, mengetik nama, lalu kamera langsung terbuka di browser HP mereka.</p>
+    </details>
+    <details class="faq">
+      <summary>Apa bedanya Momenhadir dengan layanan sejenis?</summary>
+      <p>Selain kamera sekali pakai dan album privat, Momenhadir menambahkan slideshow live untuk layar venue, pencarian foto lewat selfie, buku tamu suara &amp; video, dan pemesanan photobook cetak — semua dalam satu tempat.</p>
+    </details>
+    <details class="faq">
+      <summary>Kapan foto bisa dilihat?</summary>
+      <p>Kamu yang memilih: langsung saat acara berlangsung, atau terbuka setelah waktu acara selesai supaya jadi kejutan. Kamu sebagai tuan rumah selalu bisa melihat semua foto di dasbor.</p>
+    </details>
+    <details class="faq">
+      <summary>Bagaimana cara kerja "Temukan fotomu"?</summary>
+      <p>Setelah album terbuka, tamu mengambil satu selfie dan Momenhadir mencari foto-foto di album yang menampilkan wajah mereka. Selfie tidak disimpan.</p>
+    </details>
+    <details class="faq">
+      <summary>Bagaimana slideshow live bekerja?</summary>
+      <p>Buka link layar di laptop yang tersambung ke proyektor atau TV. Foto terbaru dari tamu muncul otomatis, lengkap dengan QR supaya tamu lain ikut bergabung. Kamu bisa menyembunyikan foto tertentu dari dasbor.</p>
+    </details>
+    <details class="faq">
+      <summary>Apakah gratis?</summary>
+      <p>Selalu gratis untuk acara hingga 5 tamu. Acara yang lebih besar mulai Rp79.000, bayar sekali per acara.</p>
+    </details>
+  </div>
+</section>
+
+<!-- ============ FINAL CTA ============ -->
+<section class="px-5 pb-24">
+  <div class="grain relative mx-auto max-w-6xl overflow-hidden rounded-[2rem] bg-primary px-8 py-16 text-primary-foreground sm:px-14">
+    <h2 class="max-w-2xl font-display text-5xl leading-[1] sm:text-6xl">
+      Hari itu cuma terjadi sekali. <em class="italic">Simpan dari setiap sudut.</em>
+    </h2>
+    <p class="mt-5 max-w-lg text-primary-foreground/85">
+      Buat albumnya, tempel QR-nya di meja, dan biarkan tamu-tamumu yang mengabadikan sisanya.
+    </p>
+    <a href="#" class="mt-8 inline-flex items-center gap-2 rounded-full bg-darkroom px-7 py-4 text-base font-semibold text-darkroom-foreground hover:opacity-90">
+      Buat album gratis <i data-lucide="arrow-right"></i>
+    </a>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer class="border-t border-border bg-background">
+  <div class="mx-auto max-w-6xl px-5 py-14">
+    <div class="grid gap-10 md:grid-cols-[1.5fr_1fr_1fr_1fr]">
+      <div>
+        <p class="flex items-center gap-2 font-display text-2xl">
+          <span class="grid size-8 place-items-center rounded-full bg-foreground text-background">
+            <i data-lucide="camera" class="text-[14px]"></i>
+          </span>
+          Momenhadir
+        </p>
+        <p class="mt-4 max-w-xs text-sm text-muted-foreground">
+          Kamera sekali pakai digital untuk pernikahan, ulang tahun, dan acara yang layak diingat.
+        </p>
+      </div>
+      <div>
+        <p class="font-mono text-[11px] uppercase tracking-widest text-muted-foreground">Produk</p>
+        <ul class="mt-4 space-y-2 text-sm">
+          <li><a href="#fitur" class="hover:text-primary">Fitur</a></li>
+          <li><a href="#plus" class="hover:text-primary">Nilai plus</a></li>
+          <li><a href="#harga" class="hover:text-primary">Harga</a></li>
+          <li><a href="#faq" class="hover:text-primary">FAQ</a></li>
+        </ul>
+      </div>
+      <div>
+        <p class="font-mono text-[11px] uppercase tracking-widest text-muted-foreground">Untuk</p>
+        <ul class="mt-4 space-y-2 text-sm">
+          <li>Pernikahan</li>
+          <li>Ulang tahun</li>
+          <li>Gathering</li>
+          <li>Event komunitas</li>
+        </ul>
+      </div>
+      <div>
+        <p class="font-mono text-[11px] uppercase tracking-widest text-muted-foreground">Kontak</p>
+        <ul class="mt-4 space-y-2 text-sm">
+          <li><a href="#" class="hover:text-primary">WhatsApp</a></li>
+          <li><a href="#" class="hover:text-primary">Instagram</a></li>
+          <li><a href="#" class="hover:text-primary">Email</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="mt-10 flex flex-col items-center justify-between gap-3 border-t border-border pt-6 text-xs text-muted-foreground sm:flex-row">
+      <p>© 2026 Momenhadir. Semua hak dilindungi.</p>
+      <p class="flex gap-4"><a href="#" class="hover:text-foreground">Privasi</a><a href="#" class="hover:text-foreground">Ketentuan</a></p>
+    </div>
+  </div>
+</footer>
+
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+<script>lucide.createIcons();</script>
 </body>
 </html>
